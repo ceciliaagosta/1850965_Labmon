@@ -1,0 +1,23 @@
+<template>
+  <div id="app">
+    <Navbar v-if="uiStore.showNavbar"/>
+    <main class="py-4">
+      <router-view />
+    </main>
+  </div>
+</template>
+
+<script setup>
+import Navbar from './components/Navbar.vue';
+import { useUiStore } from './stores/uiStore';
+import { useAuthStore } from './stores/authStore';
+import { onMounted } from 'vue';
+
+// store rehydration
+const authStore = useAuthStore()
+onMounted(() => {
+  authStore.init()
+})
+
+const uiStore = useUiStore()
+</script>
