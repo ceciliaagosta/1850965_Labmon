@@ -29,7 +29,7 @@
               {{ item[key] }}
             </td>
             <td>
-              <button class="btn btn-primary btn-sm" @click="handleEditUser(item)">Edit</button>
+              <button class="btn btn-primary btn" @click="handleEditUser(item)">Edit User</button>
             </td>
             <td>
               <DeleteAccountButton :userId="item.id"/>

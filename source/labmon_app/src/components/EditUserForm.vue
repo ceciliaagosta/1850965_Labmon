@@ -3,7 +3,7 @@
       <div class="card shadow p-4" style="width: 100%; min-width: 400px;">
         <h2 class="mb-4 text-center">Edit User {{ props.userData.username }}</h2>
   
-        <form @submit.prevent="handleRegister">
+        <form @submit.prevent="handleEdit">
           <!-- Username -->
           <div class="mb-3">
             <label for="username" class="form-label">Username</label>
@@ -29,7 +29,7 @@
           </div>
   
           <!-- Role -->
-          <div class="mb-3">
+          <div class="mb-3" v-if="isAdmin">
             <label for="role" class="form-label">Role</label>
             <select
               id="role"
@@ -41,9 +41,15 @@
               <option value="admin">Admin</option>
             </select>
           </div>
+
+          <div class="mb-3">
+            <button class="btn btn-success" v-if="!changingPassword" @click="handleToggleChangePassword">
+              Change password
+            </button>
+          </div>
   
           <!-- Password -->
-          <div class="mb-3" v-if="!isAdmin">
+          <div class="mb-3" v-if="!isAdmin && changingPassword">
             <label for="password" class="form-label">Password</label>
             <input
               type="password"
@@ -54,14 +60,14 @@
             />
           </div>
   
-          <!-- Confirm Password -->
-          <div class="mb-3" v-if="!isAdmin">
-            <label for="confirmPassword" class="form-label">Confirm Password</label>
+          <!-- Old Password -->
+          <div class="mb-3" v-if="!isAdmin && changingPassword">
+            <label for="oldPassword" class="form-label">Confirm Password</label>
             <input
               type="password"
-              id="confirmPassword"
+              id="oldPassword"
               class="form-control"
-              v-model="confirmPassword"
+              v-model="oldPassword"
               required
             />
           </div>
@@ -87,6 +93,8 @@
   // import { useAuthStore } from '../stores/authStore';
   import router from '../router';
   import { useUserStore } from '../stores/userStore';
+import { isAxiosError } from 'axios';
+import { useAuthStore } from '../stores/authStore';
   
   
   const userStore = useUserStore()
@@ -106,8 +114,9 @@
   const email = ref(props.userData.email);
   const role = ref(props.userData.role);
   const password = ref('');
-  const confirmPassword = ref('');
+  const oldPassword = ref('');
 
+  const changingPassword = ref(false);
   const loading = ref(false);
   const error = ref('');
 
@@ -122,11 +131,16 @@
     },
     {immediate: true}
   )
+
+  const handleToggleChangePassword = async () => {
+    changingPassword.value = !changingPassword.value
+  };
   
-  const handleRegister = async () => {
+  const handleEdit = async () => {
     error.value = '';
   
     loading.value = true;
+    console.log("changing", changingPassword.value)
 
     if (props.isAdmin) {
       error.value = await userStore.updateUser(props.userData.id, {
@@ -135,24 +149,34 @@
         role: role.value,
         });
     } else {
-      if (password.value.length < 8) {
+      if ((password.value.length < 8) && changingPassword.value) {
         error.value = 'Password must be at least 8 characters long.';
+        loading.value = false
         return;
-        }
-        
-      if (password.value !== confirmPassword.value) {
-          error.value = 'Passwords do not match.';
-          return;
-      }        
-      error.value = await userStore.updateUser(props.userData.id, {
-      username: username.value,
-      email: email.value,
-      password: password.value,
-      role: role.value,
-      });
+      }
+       
+      if (changingPassword.value) {
+        error.value = await userStore.updateUser(props.userData.id, {
+        username: username.value,
+        email: email.value,
+        password: password.value,
+        old_password: oldPassword.value
+        });
+      } else {
+        error.value = await userStore.updateUser(props.userData.id, {
+        username: username.value,
+        email: email.value,
+        });
+      }
     }
     
-    userStore.fetchAllUsers()
+    if (props.isAdmin) {
+      userStore.fetchAllUsers()
+    } else {
+      const authStore = useAuthStore()
+      authStore.user = userStore.currentUser
+    }
+    
     loading.value = false;
   };
   </script>

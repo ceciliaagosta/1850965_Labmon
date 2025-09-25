@@ -108,7 +108,7 @@ const handleRegister = async () => {
       password: password.value,
     });
 
-    router.push('/login');
+    router.push('/');
   } catch (err) {
     console.error('Registration error:', err);
     error.value = err?.response?.data?.message || 'Registration failed.';

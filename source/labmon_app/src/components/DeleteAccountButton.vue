@@ -4,7 +4,7 @@
       Are you sure? This action is <strong>irreversible</strong>.
     </p>
     <button
-    class="btn btn-link text-danger text-decoration-none"
+    class="btn btn-danger"
     @click="handleClick"
     :disabled="loading"
     >
@@ -26,7 +26,7 @@ const loading = ref(false)
 const props = defineProps({
   userId: {
     type: Number,
-    required: true
+    required: true,
   }
 })
 

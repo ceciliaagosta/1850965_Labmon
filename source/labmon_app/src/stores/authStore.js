@@ -26,7 +26,13 @@ export const useAuthStore = defineStore('auth', () => {
   async function register(credentials) {
     try {
       const res = await _register(credentials)
-      console.log("Registration success, sending to login")
+      setToken(res.data.token)
+      const decoded = jwtDecode(token.value)
+      userId.value = decoded.user_id
+      role.value = decoded.role
+      const userStore = useUserStore()
+      await userStore.fetchUser(userId.value)
+      user.value = userStore.currentUser
     } catch (error) {
       const message = error.response.data.error
       console.log(message)
@@ -40,13 +46,12 @@ export const useAuthStore = defineStore('auth', () => {
       const decoded = jwtDecode(token.value)
       userId.value = decoded.user_id
       role.value = decoded.role
-    } catch (error) {
-      const message = error.response.data.error
-      console.log(message)
-    } finally {
       const userStore = useUserStore()
       await userStore.fetchUser(userId.value)
       user.value = userStore.currentUser
+    } catch (error) {
+      const message = error.response.data.error
+      console.log(message)
     }
   }
 
@@ -64,14 +69,13 @@ export const useAuthStore = defineStore('auth', () => {
         const decoded = jwtDecode(token.value)
         userId.value = decoded.user_id
         role.value = decoded.role
+        const userStore = useUserStore()
+        await userStore.fetchUser(userId.value)
+        user.value = userStore.currentUser
       } catch (error) {
         console.warn('Auth rehydration failed, logging out:', error)
         logout()
-    } finally {
-      const userStore = useUserStore()
-      await userStore.fetchUser(userId.value)
-      user.value = userStore.currentUser
-    }
+      }
     }
   }
 

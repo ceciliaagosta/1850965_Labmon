@@ -118,7 +118,7 @@ def add_user(current_user):
     new_user.set_password(data['password'])
     db.session.add(new_user)
     db.session.commit()
-    return jsonify(new_user.to_dict()), 201
+    return jsonify(new_user.to_dict()), 200
 
 # Get, update, delete user by ID (self or admin)
 @app.route('/users/<int:user_id>', methods=['GET'])
