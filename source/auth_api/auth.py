@@ -118,7 +118,7 @@ def add_user(current_user):
     new_user.set_password(data['password'])
     db.session.add(new_user)
     db.session.commit()
-    return jsonify(new_user.to_dict()), 201
+    return jsonify(new_user.to_dict()), 200
 
 # Get, update, delete user by ID (self or admin)
 @app.route('/users/<int:user_id>', methods=['GET'])
@@ -148,9 +148,9 @@ def update_user(current_user, user_id):
         return jsonify({'error': 'Invalid input'}), 400
     
     # Update username and email
-    if 'username' in data and User.query.filter_by(username=data['username']).first():
+    if 'username' in data and User.query.filter(User.username == data['username'], User.id != user.id).first():
         return jsonify({'error': 'Username already exists'}), 400
-    if 'email' in data and User.query.filter_by(email=data['email']).first():
+    if 'email' in data and User.query.filter(User.email == data['email'], User.id != user.id).first():
         return jsonify({'error': 'Email already registered'}), 400
     user.username = data.get('username', user.username)
     user.email = data.get('email', user.email)
