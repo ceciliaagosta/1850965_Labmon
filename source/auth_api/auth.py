@@ -36,7 +36,7 @@ with app.app_context():
     else:
         raise Exception("Database connection failed after retries")
 
-# check if password is valid
+# Check if password is valid
 def is_valid_password(password):
     if len(password) < 8:
         return False
@@ -148,6 +148,10 @@ def update_user(current_user, user_id):
         return jsonify({'error': 'Invalid input'}), 400
     
     # Update username and email
+    if 'username' in data and User.query.filter_by(username=data['username']).first():
+        return jsonify({'error': 'Username already exists'}), 400
+    if 'email' in data and User.query.filter_by(email=data['email']).first():
+        return jsonify({'error': 'Email already registered'}), 400
     user.username = data.get('username', user.username)
     user.email = data.get('email', user.email)
 
@@ -199,7 +203,8 @@ def register():
     new_user.set_password(data['password'])
     db.session.add(new_user)
     db.session.commit()
-    return jsonify(new_user.to_dict()), 201
+    token = generate_token(new_user.id)
+    return jsonify({'token': token}), 200
 
 @app.route('/login', methods=['POST'])
 def login():
