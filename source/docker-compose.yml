@@ -44,6 +44,21 @@ services:
     networks:
       - labap_network
 
+  items_api:
+    build: ./items_api
+    container_name: labmon_items_api
+    image: items_api:latest
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://user:password@db:5432/labap_db
+      SECRET_KEY: 1234
+    ports:
+      - "5003:5000"
+    depends_on:
+      - db
+    networks:
+      - labap_network
+
   labmon_app:
     build: ./labmon_app
     container_name: labmon_app
