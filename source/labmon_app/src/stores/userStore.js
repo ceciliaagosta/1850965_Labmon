@@ -1,8 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { _deleteUser, _fetchAllUsers, _fetchUser, _manualRegister, _updateUser } from '../services/users'
-import { useAuthStore } from './authStore'
-import { _tokenExpired } from '../services/auth'
+import { _deleteUser, _fetchAllUsers, _fetchUser, _manualRegister, _updateUser, _tokenExpired } from '../services/usersApi'
 
 export const useUserStore = defineStore('user', () => {
   const users = ref([])

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { _login, _register } from '../services/auth'
+import { _login, _register } from '../services/usersApi'
 import { jwtDecode } from 'jwt-decode'
 import router from '../router'
 import { useUserStore } from './userStore'
