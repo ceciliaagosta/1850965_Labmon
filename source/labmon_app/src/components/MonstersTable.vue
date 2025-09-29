@@ -1,7 +1,7 @@
 <template>
   <div class="card my-4 shadow-sm">
     <div class="card-header">
-      <h5 class="mb-0">Users</h5>
+      <h5 class="mb-0">Monsters</h5>
     </div>
 
     <div class="card-body table-responsive">
@@ -16,10 +16,10 @@
               {{ key }}
             </th>
             <th>
-              Edit User
+              Edit Monster
             </th>
             <th>
-              Delete User
+              Delete Monster
             </th>
           </tr>
         </thead>
@@ -29,10 +29,10 @@
               {{ item[key] }}
             </td>
             <td>
-              <button class="btn btn-primary btn" @click="handleEditUser(item)">Edit User</button>
+              <button class="btn btn-primary" @click="handleEditMonster(item)">Edit Monster</button>
             </td>
             <td>
-              <DeleteAccountButton :userId="item.id"/>
+              <DeleteMonsterButton :monsterId="item.id" />
             </td>
           </tr>
         </tbody>
@@ -40,15 +40,16 @@
       <div v-else class="text-center text-muted p-3">
         No data to display.
       </div>
-      <button class="btn btn-success mt-2" @click="handleCreateUser">
-        {{ showRegisterForm ? "Create user (Hide)" : "Create user (Show)" }}
+      <button class="btn btn-success mt-2" @click="handleCreateMonster">
+        {{ showCreateMonsterForm ? "Create Monster (Hide)" : "Create Monster (Show)" }}
       </button>
       <div class="d-flex gap-3">
-        <div v-if="showRegisterForm">
-          <ManualRegisterForm />
+        <div v-if="showCreateMonsterForm">
+          <CreateMonsterForm/>
         </div>
-        <div v-if="currentUserData">
-          <EditUserForm :userData="currentUserData" :isAdmin="true" />
+        <div v-if="currentMonsterData">
+          <!-- <EditUserForm :userData="currentUserData" :isAdmin="true" /> -->
+            <EditMonsterForm :monsterData="currentMonsterData"/>
         </div>
       </div>
     </div>
@@ -57,9 +58,9 @@
 
 <script setup>
 import { computed, ref } from 'vue'
-import ManualRegisterForm from './ManualRegisterForm.vue'
-import DeleteAccountButton from './DeleteAccountButton.vue'
-import EditUserForm from './EditUserForm.vue'
+import DeleteMonsterButton from './DeleteMonsterButton.vue';
+import CreateMonsterForm from './CreateMonsterForm.vue';
+import EditMonsterForm from './EditMonsterForm.vue';
 
 const { data } = defineProps({
   data: {
@@ -69,8 +70,8 @@ const { data } = defineProps({
   }
 })
 
-const showRegisterForm = ref(false)
-const currentUserData = ref(null)
+const showCreateMonsterForm = ref(false)
+const currentMonsterData = ref(null)
 
 const objectKeys = computed(() => {
   if (data.length === 0) return []
@@ -80,19 +81,19 @@ const objectKeys = computed(() => {
     keys.splice(idIndex, 1)
     keys.unshift('id')
   }
-  const usernameIndex = keys.indexOf('username')
-  if (usernameIndex !== -1) {
-    keys.splice(usernameIndex, 1)
-    keys.unshift('username')
+  const nameIndex = keys.indexOf('name')
+  if (nameIndex !== -1) {
+    keys.splice(nameIndex, 1)
+    keys.unshift('name')
   }
   return keys
 })
 
-const handleCreateUser = async () => {
-  showRegisterForm.value = !showRegisterForm.value
+const handleCreateMonster = async () => {
+  showCreateMonsterForm.value = !showCreateMonsterForm.value
 };
 
-const handleEditUser = async (user) => {
-  currentUserData.value = user
+const handleEditMonster = async (monster) => {
+  currentMonsterData.value = monster
 };
 </script>

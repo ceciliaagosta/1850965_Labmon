@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { _tokenExpired } from '../services/auth'
-import { _createMonster, _deleteMonster, _fetchAllMonsters, _fetchMonster, _updateMonster } from '../services/monsters'
+import { _tokenExpired } from '../services/usersApi'
+import { _createMonster, _deleteMonster, _fetchAllMonsters, _fetchMonster, _updateMonster } from '../services/monstersApi'
 
 export const useMonsterStore = defineStore('monster', () => {
   const monsters = ref([])
