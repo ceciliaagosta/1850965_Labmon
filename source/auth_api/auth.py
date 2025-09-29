@@ -95,7 +95,7 @@ def decode_token(token, secret_key=config.SECRET_KEY):
 @admin_required
 def get_users(current_user):
     users = User.query.all()
-    return jsonify([user.to_dict() for user in users])
+    return jsonify([user.to_dict() for user in users]), 200
 
 # Add a new user (admin only)
 @app.route('/users', methods=['POST'])
@@ -138,15 +138,15 @@ def update_user(current_user, user_id):
     user = User.query.get_or_404(user_id)
     data = request.get_json()
 
+    # Reject empty input
+    if not data:
+        return jsonify({'error': 'Invalid input'}), 400
+
     # Reject invalid keys
     invalid_keys = set(data.keys()) - VALID_FIELDS
     if invalid_keys:
         return jsonify({'error': f'Invalid fields: {list(invalid_keys)}'}), 400 
-    
-    # Reject empty input
-    if not data:
-        return jsonify({'error': 'Invalid input'}), 400
-    
+
     # Update username and email
     if 'username' in data and User.query.filter(User.username == data['username'], User.id != user.id).first():
         return jsonify({'error': 'Username already exists'}), 400

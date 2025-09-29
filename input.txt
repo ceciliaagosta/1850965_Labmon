@@ -28,7 +28,7 @@ The project is a browser monster collector game web application. Players can col
 22. As an Admin, I want to logout, so that no one else can use my account  
 23. As an Admin, I want to access my account, so that I can edit my personal information  
 24. As an Admin, I want to access my account, so that I can delete my personal information  
-25. As an admin, I want a secure dashboard, so that only authorized admins can manage content  
+25. As an Admin, I want a secure dashboard, so that only authorized admins can manage content  
 26. As an Admin, I want to see all users' accounts, so that I can have a clear view of the people in the system  
 27. As an Admin, I want to edit users' accounts, so that I can help users in managing their personal information  
 28. As an Admin, I want to delete users' accounts, so that I can remove malicious users from the system  
