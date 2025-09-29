@@ -188,7 +188,7 @@ def delete_user(current_user, user_id):
     return jsonify({'message': 'User deleted'}), 200
 
 # User registration and login
-@app.route('/register', methods=['POST'])
+@app.route('/users/register', methods=['POST'])
 def register():
     data = request.get_json()
 
@@ -206,7 +206,7 @@ def register():
     token = generate_token(new_user.id)
     return jsonify({'token': token}), 200
 
-@app.route('/login', methods=['POST'])
+@app.route('/users/login', methods=['POST'])
 def login():
     data = request.get_json()
 
