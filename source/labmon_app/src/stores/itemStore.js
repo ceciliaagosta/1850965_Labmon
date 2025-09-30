@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { _tokenExpired } from '../services/auth'
+import { _tokenExpired } from '../services/usersApi'
 import { _createItem, _deleteItem, _fetchAllItems, _fetchItem, _updateItem } from '../services/itemsApi'
 
 export const useItemStore = defineStore('item', () => {

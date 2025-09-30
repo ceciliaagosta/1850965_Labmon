@@ -19,28 +19,28 @@ itemsApi.interceptors.request.use(
 
 // admin routes
 export async function _fetchAllItems() {
-  const res = await itemsApi.get(`/items`)
+  const res = await itemsApi.get(``)
   return res
 }
 
 export async function _createItem(itemData) {
-    const res = await itemsApi.post(`/items`, itemData)
+    const res = await itemsApi.post(``, itemData)
     return res
 }
 
 export async function _updateItem(itemId, itemData) {
-    const res = await itemsApi.put(`/items/${itemId}`, itemData)
+    const res = await itemsApi.put(`/${itemId}`, itemData)
     return res
 }
 
 export async function _deleteItem(itemId) {
-    const res = await itemsApi.delete(`/items/${itemId}`)
+    const res = await itemsApi.delete(`/${itemId}`)
     return res
 }
 
 // ---
 
 export async function _fetchItem(itemId) {
-  const res = await itemsApi.get(`/items/${itemId}`)
+  const res = await itemsApi.get(`/${itemId}`)
   return res
 }
