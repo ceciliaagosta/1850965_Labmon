@@ -43,13 +43,13 @@
           </div>
 
           <div class="mb-3">
-            <button class="btn btn-success" v-if="!changingPassword" @click="handleToggleChangePassword">
+            <button class="btn btn-success" v-if="userData.id == authStore.user.id && !changingPassword" @click="handleToggleChangePassword">
               Change password
             </button>
           </div>
   
           <!-- Password -->
-          <div class="mb-3" v-if="!isAdmin && changingPassword">
+          <div class="mb-3" v-if="changingPassword">
             <label for="password" class="form-label">Password</label>
             <input
               type="password"
@@ -61,7 +61,7 @@
           </div>
   
           <!-- Old Password -->
-          <div class="mb-3" v-if="!isAdmin && changingPassword">
+          <div class="mb-3" v-if="changingPassword">
             <label for="oldPassword" class="form-label">Confirm Password</label>
             <input
               type="password"
@@ -102,6 +102,8 @@ import { useAuthStore } from '../stores/authStore';
   
   
   const userStore = useUserStore()
+
+  const authStore = useAuthStore()
   
   const props = defineProps({
     userData: {
@@ -132,6 +134,7 @@ import { useAuthStore } from '../stores/authStore';
         username.value = newUserData.username;
         email.value = newUserData.email;
         role.value = newUserData.role;
+        changingPassword.value = false;
       }
     },
     {immediate: true}
@@ -145,8 +148,6 @@ import { useAuthStore } from '../stores/authStore';
     errorMessage.value = '';
     successMessage.value = '';
     loading.value = true;
-
-    console.log("changing", changingPassword.value)
 
     if (props.isAdmin) {
       errorMessage.value = await userStore.updateUser(props.userData.id, {

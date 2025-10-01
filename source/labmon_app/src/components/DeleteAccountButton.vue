@@ -1,16 +1,18 @@
 <template>
-  <div>
+  <div class="container d-flex flex-column">
     <p v-if="confirming" class="text-danger mb-2">
       Are you sure? This action is <strong>irreversible</strong>.
     </p>
-    <button
-    class="btn btn-danger"
-    @click="handleClick"
-    :disabled="loading"
-    >
+  <div class="mb-3">
+      <button
+      class="btn btn-danger"
+      @click="handleClick"
+      :disabled="loading"
+      >
     <span v-if="loading" class="spinner-border spinner-border-sm me-2"></span>
     {{ confirming ? 'Delete Anyway' : 'Delete Account ' }}
     </button>
+  </div>
 
   </div>
 </template>
