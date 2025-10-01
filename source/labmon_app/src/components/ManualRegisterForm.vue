@@ -66,16 +66,20 @@
           />
         </div>
 
-        <!-- Error Message -->
-        <div v-if="error" class="alert alert-danger py-2">
-          {{ error }}
-        </div>
-
         <!-- Submit Button -->
         <button type="submit" class="btn btn-success w-100" :disabled="loading">
           <span v-if="loading" class="spinner-border spinner-border-sm me-2"></span>
           Create user
         </button>
+
+        <!-- Error Message -->
+        <div v-if="successMessage" class="alert alert-success mt-3">
+          {{ successMessage }}
+        </div>
+
+        <div v-if="errorMessage" class="alert alert-danger mt-3">
+          {{ errorMessage }}
+        </div>
       </form>
 
     </div>
@@ -96,31 +100,48 @@ const email = ref('');
 const role = ref('user');
 const password = ref('');
 const confirmPassword = ref('');
+
 const loading = ref(false);
-const error = ref('');
+const errorMessage = ref('');
+const successMessage = ref('');
 
 const handleRegister = async () => {
-  error.value = '';
+  successMessage.value = ''
+  errorMessage.value = ''
 
   if (password.value.length < 8) {
-    error.value = 'Password must be at least 8 characters long.';
+    errorMessage.value = 'Password must be at least 8 characters long.';
     return;
   }
 
   if (password.value !== confirmPassword.value) {
-    error.value = 'Passwords do not match.';
+    errorMessage.value = 'Passwords do not match.';
     return;
   }
 
   loading.value = true;
 
-  error.value = await userStore.manualRegister({
+  errorMessage.value = await userStore.manualRegister({
     username: username.value,
     email: email.value,
     password: password.value,
     role: role.value,
   });
-  userStore.fetchAllUsers()
+
+  if (errorMessage.value) {
+    loading.value = false;
+    return;
+  }
+
+  successMessage.value = 'User created successfully!'
+
+  username.value = '';
+  email.value = '';
+  role.value = 'user';
+  password.value = '';
+  confirmPassword.value = '';
+
+  await userStore.fetchAllUsers()
   loading.value = false;
 };
 </script>

@@ -4,31 +4,34 @@
       <h2 class="mb-4 text-center">Create Item</h2>
         <form @submit.prevent="handleSubmit">
             <div class="mb-3">
-            <label for="name" class="form-label">Item Name</label>
-            <input v-model="form.name" type="text" id="name" class="form-control" required />
+              <label for="name" class="form-label">Item Name</label>
+              <input v-model="form.name" type="text" id="name" class="form-control" required />
             </div>
 
             <div class="mb-3">
-            <label for="price" class="form-label">Price</label>
-            <input v-model="form.price" type="text" id="price" class="form-control" required />
+              <label for="price" class="form-label">Price</label>
+              <input v-model="form.price" type="text" id="price" class="form-control" required />
             </div>
 
             <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <input v-model="form.description" type="text" id="description" class="form-control" required />
+              <label for="description" class="form-label">Description</label>
+              <input v-model="form.description" type="text" id="description" class="form-control" required />
             </div>
 
             <div class="mb-3">
-            <label for="effect" class="form-label">Effect</label>
-            <input v-model="form.effect" type="text" id="effect" class="form-control" required />
+              <label for="effect" class="form-label">Effect</label>
+              <input v-model="form.effect" type="text" id="effect" class="form-control" required />
             </div>
 
             <div class="mb-3">
-            <label for="sprite" class="form-label">Sprite URL</label>
-            <input v-model="form.sprite" type="text" id="sprite" class="form-control" required />
+              <label for="sprite" class="form-label">Sprite URL</label>
+              <input v-model="form.sprite" type="text" id="sprite" class="form-control" required />
             </div>
 
-            <button type="submit" class="btn btn-success">Create Item</button>
+            <button type="submit" class="btn btn-success" :disabled="loading">
+              <span v-if="loading" class="spinner-border spinner-border-sm me-2"></span>
+              Create Item
+            </button>
 
             <div v-if="successMessage" class="alert alert-success mt-3">
             {{ successMessage }}
@@ -54,6 +57,7 @@ const form = ref({
   sprite: ''
 })
 
+const loading = ref(false);
 const successMessage = ref('')
 const errorMessage = ref('')
 
@@ -61,20 +65,24 @@ const handleSubmit = async () => {
   successMessage.value = ''
   errorMessage.value = ''
   const itemStore = useItemStore()
-  try {
-    await itemStore.createItem(form.value)
-    console.log(form.value)
-    successMessage.value = 'Item created successfully!'
-    form.value = {
-      name: '',
-      price: '',
+  loading.value = true;
+  errorMessage.value = await itemStore.createItem(form.value)
+  console.log(form.value)
+
+  if (errorMessage.value) {
+    loading.value = false;
+    return;
+  }
+
+  successMessage.value = 'Item created successfully!'
+  form.value = {
+    name: '',
+    price: '',
       description: '',
       effect: '',
       sprite: ''
     }
     await itemStore.fetchAllItems()
-  } catch (err) {
-    errorMessage.value = err.response?.data?.message || 'Failed to create item.'
-  }
+    loading.value = false;
 }
 </script>
