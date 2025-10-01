@@ -44,9 +44,6 @@ export const useUserStore = defineStore('user', () => {
       } 
       const message = error.response.data.error
       console.log(message)
-      // if (useAuthStore().user.id === userId) {
-        
-      // }
     }
   }
 
@@ -54,7 +51,7 @@ export const useUserStore = defineStore('user', () => {
     try {
       const res = await _updateUser(userId, userData)
       currentUser.value = res.data
-      return "Updated successfully"
+      return ''
     } catch (error) {
       if (error.status === 401) {
         _tokenExpired()

@@ -73,8 +73,12 @@
           </div>
   
           <!-- Error Message -->
-          <div v-if="error" class="alert alert-danger py-2">
-            {{ error }}
+          <div v-if="successMessage" class="alert alert-success mt-3">
+            {{ successMessage }}
+          </div>
+
+          <div v-if="errorMessage" class="alert alert-danger mt-3">
+            {{ errorMessage }}
           </div>
   
           <!-- Submit Button -->
@@ -118,7 +122,8 @@ import { useAuthStore } from '../stores/authStore';
 
   const changingPassword = ref(false);
   const loading = ref(false);
-  const error = ref('');
+  const errorMessage = ref('');
+  const successMessage = ref('');
 
   watch(
     () => props.userData,
@@ -137,40 +142,47 @@ import { useAuthStore } from '../stores/authStore';
   };
   
   const handleEdit = async () => {
-    error.value = '';
-  
+    errorMessage.value = '';
+    successMessage.value = '';
     loading.value = true;
+
     console.log("changing", changingPassword.value)
 
     if (props.isAdmin) {
-      error.value = await userStore.updateUser(props.userData.id, {
+      errorMessage.value = await userStore.updateUser(props.userData.id, {
         username: username.value,
         email: email.value,
         role: role.value,
         });
     } else {
       if ((password.value.length < 8) && changingPassword.value) {
-        error.value = 'Password must be at least 8 characters long.';
+        errorMessage.value = 'Password must be at least 8 characters long.';
         loading.value = false
         return;
       }
        
       if (changingPassword.value) {
-        error.value = await userStore.updateUser(props.userData.id, {
+        errorMessage.value = await userStore.updateUser(props.userData.id, {
         username: username.value,
         email: email.value,
         password: password.value,
         old_password: oldPassword.value
         });
       } else {
-        error.value = await userStore.updateUser(props.userData.id, {
+        errorMessage.value = await userStore.updateUser(props.userData.id, {
         username: username.value,
         email: email.value,
         });
       }
     }
     
+    if (errorMessage.value) {
+    loading.value = false;
+    return;
+    }
+
     if (props.isAdmin) {
+      successMessage.value = 'User updated successfully!'
       userStore.fetchAllUsers()
     } else {
       const authStore = useAuthStore()
