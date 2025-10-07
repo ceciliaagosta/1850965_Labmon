@@ -1,4 +1,15 @@
 services:
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+
   db:
     image: postgres
     container_name: labmon_db
@@ -22,10 +33,12 @@ services:
     environment:
       DATABASE_URL: postgresql://user:password@db:5432/labap_db
       SECRET_KEY: 1234
+      RABBITMQ_HOST: rabbitmq
     ports:
       - "5001:5000"
     depends_on:
       - db
+      - rabbitmq
     networks:
       - labap_network
 
@@ -37,10 +50,12 @@ services:
     environment:
       DATABASE_URL: postgresql://user:password@db:5432/labap_db
       SECRET_KEY: 1234
+      RABBITMQ_HOST: rabbitmq
     ports:
       - "5002:5000"
     depends_on:
       - db
+      - rabbitmq
     networks:
       - labap_network
 
@@ -52,10 +67,29 @@ services:
     environment:
       DATABASE_URL: postgresql://user:password@db:5432/labap_db
       SECRET_KEY: 1234
+      RABBITMQ_HOST: rabbitmq
     ports:
       - "5003:5000"
     depends_on:
       - db
+      - rabbitmq
+    networks:
+      - labap_network
+  
+    game_api:
+    build: ./game_api
+    container_name: labmon_game_api
+    image: game_api:latest
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://user:password@db:5432/labap_db
+      SECRET_KEY: 1234
+      RABBITMQ_HOST: rabbitmq
+    ports:
+      - "5004:5000"
+    depends_on:
+      - db
+      - rabbitmq
     networks:
       - labap_network
 

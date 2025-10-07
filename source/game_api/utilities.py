@@ -2,6 +2,8 @@
 from datetime import datetime, timezone
 import config
 import random
+from models import db, Player, MonsterStats, ItemStats
+from flask import current_app
 
 # Rarity weight function - returns a weights for rarity levels 1 to 5 based on time passed since last encounter
 def rarity_weights(last_encounter_time):
@@ -47,3 +49,23 @@ def select_monster(encounter_pool):
 def attempt_catch(catch_rate, item_effect):
     adjusted_rate = catch_rate * item_effect
     return random.random() < adjusted_rate
+
+def player_event_handler(event_type, user_id):
+    with current_app.app_context():
+        try:
+            if event_type == 'user_deleted':
+                # Delete associated player data
+                player = Player.query.filter_by(user_id=user_id).first()
+                if player:
+                    db.session.delete(player)
+                    db.session.commit()
+                    current_app.logger.info(f"Deleted player data for user_id {user_id}")
+            elif event_type == 'user_created':
+                # Create associated player data if not exists
+                if not Player.query.filter_by(user_id=user_id).first():
+                    new_player = Player(user_id=user_id)
+                    db.session.add(new_player)
+                    db.session.commit()
+                    current_app.logger.info(f"Created player data for user_id {user_id}")
+        except Exception as e:
+            current_app.logger.error(f"Error handling event: {e}")

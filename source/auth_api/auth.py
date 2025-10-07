@@ -7,6 +7,9 @@ import datetime
 from functools import wraps
 import time
 import sqlalchemy.exc
+import pika
+import os
+import utilities
 
 VALID_FIELDS = {"username", "email", "role", "password", "old_password"}  # allowed keys to update
 
@@ -36,11 +39,6 @@ with app.app_context():
     else:
         raise Exception("Database connection failed after retries")
 
-# Check if password is valid
-def is_valid_password(password):
-    if len(password) < 8:
-        return False
-    return True
 
 # Token required decorator
 def token_required(f):
@@ -118,6 +116,7 @@ def add_user(current_user):
     new_user.set_password(data['password'])
     db.session.add(new_user)
     db.session.commit()
+    utilities.publish_message('user_created', new_user.id)
     return jsonify(new_user.to_dict()), 200
 
 # Get, update, delete user by ID (self or admin)
@@ -167,7 +166,7 @@ def update_user(current_user, user_id):
         if current_user.id != user_id:
            return jsonify({'error': 'Password can only be changed by the user themselves'}), 403
         elif 'old_password' in data and user.check_password(data['old_password']):
-            if is_valid_password(data['password']):
+            if utilities.is_valid_password(data['password']):
                 user.set_password(data['password'])
             else:
                 return jsonify({'error': 'Invalid password format'}), 400
@@ -185,6 +184,7 @@ def delete_user(current_user, user_id):
     user = User.query.get_or_404(user_id)
     db.session.delete(user)
     db.session.commit()
+    utilities.publish_message('user_deleted', user_id)
     return jsonify({'message': 'User deleted'}), 200
 
 # User registration and login
@@ -203,6 +203,7 @@ def register():
     new_user.set_password(data['password'])
     db.session.add(new_user)
     db.session.commit()
+    utilities.publish_message('user_created', new_user.id)
     token = generate_token(new_user.id)
     return jsonify({'token': token}), 200
 

@@ -8,6 +8,10 @@ from functools import wraps
 import time
 from datetime import datetime, timezone
 import sqlalchemy.exc
+import pika
+import os
+import json
+import threading
 
 app = Flask(__name__)
 app.config.from_object(config)
@@ -28,6 +32,21 @@ with app.app_context():
     else:
         raise Exception("Database connection failed after retries")
     
+def consume_player_events():
+    try: 
+        connection = pika.BlockingConnection(pika.ConnectionParameters(host=config.RABBITMQ_HOST))
+        channel = connection.channel()
+        channel.queue_declare(queue='users_queue', durable=True)
+
+        def callback(ch, method, properties, body):
+            message = json.loads(body)
+            utilities.player_event_handler(message)
+
+        channel.basic_consume(queue='users_queue', on_message_callback=callback, auto_ack=True)
+        channel.start_consuming()
+    except pika.exceptions.AMQPConnectionError as e:
+        print(f"Error : Could not connect to RabbitMQ: {e}")
+
 # Token required decorator
 def token_required(f):
     @wraps(f)
@@ -183,3 +202,8 @@ def catch_monster(data, encounter_id):
     
     else:
         return jsonify({'message': 'Failed to catch the monster.', 'player_currency': player.currency}), 200
+    
+
+if __name__ == '__main__':
+    threading.Thread(target=consume_player_events, daemon=True).start()
+    app.run(host="0.0.0.0", port=5000, debug=True) # TODO: Remove debug=True in production
