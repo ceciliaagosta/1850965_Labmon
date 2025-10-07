@@ -76,7 +76,7 @@ services:
     networks:
       - labap_network
   
-    game_api:
+  game_api:
     build: ./game_api
     container_name: labmon_game_api
     image: game_api:latest
