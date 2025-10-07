@@ -13,6 +13,11 @@ class Monster(db.Model):
     collection = db.Column(db.Integer, nullable=False)
     sprite = db.Column(db.String(200), nullable=False)
 
+    __table_args__ = (
+        CheckConstraint('rarity >= 1 AND rarity <= 5', name='rarity_between_1_and_5'),
+        CheckConstraint('catch_rate >= 0 AND catch_rate <= 1', name='catch_rate_between_0_and_1'),
+    )
+
     def to_dict(self):
         return {
             'id': self.id,

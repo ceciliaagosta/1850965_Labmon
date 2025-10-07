@@ -28,7 +28,7 @@ with app.app_context():
     else:
         raise Exception("Database connection failed after retries")
     
-    # Token required decorator
+# Token required decorator
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
