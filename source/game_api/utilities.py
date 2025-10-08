@@ -4,6 +4,10 @@ import config
 import random
 from models import db, Player, MonsterStats, ItemStats
 from flask import current_app
+import time
+import json
+import pika
+from pika.exceptions import AMQPConnectionError
 
 # Rarity weight function - returns a weights for rarity levels 1 to 5 based on time passed since last encounter
 def rarity_weights(last_encounter_time):
@@ -50,9 +54,71 @@ def attempt_catch(catch_rate, item_effect):
     adjusted_rate = catch_rate * item_effect
     return random.random() < adjusted_rate
 
-def player_event_handler(event_type, user_id):
+# Retry connection function for RabbitMQ
+def retry_connection(connect_fn, retries=5, delay=3, backoff=2):
+    """
+    Retry connecting to RabbitMQ or any service.
+    
+    :param connect_fn: Function that returns a connection (e.g., pika.BlockingConnection)
+    :param retries: Number of retries before giving up
+    :param delay: Initial delay in seconds
+    :param backoff: Multiplier for exponential backoff
+    :return: Connected object
+    :raises: Last exception if connection fails after all retries
+    """
+    attempt = 0
+    current_delay = delay
+    while attempt < retries:
+        try:
+            return connect_fn()
+        except AMQPConnectionError as e:
+            attempt += 1
+            if attempt == retries:
+                raise
+            print(f"Connection failed (attempt {attempt}/{retries}): {e}. Retrying in {current_delay}s...")
+            time.sleep(current_delay)
+            current_delay *= backoff
+
+# Start RabbitMQ consumer with retries
+def start_consumer(queue_name, callback, host, retries=5):
+    def connect():
+        return pika.BlockingConnection(pika.ConnectionParameters(host=host))
+    
+    connection = retry_connection(connect, retries=retries)
+    channel = connection.channel()
+    channel.queue_declare(queue=queue_name, durable=True)
+    print(f"Consumer connected to queue '{queue_name}'")
+    
+    callback = generic_callback(queue_name)
+    channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
+    channel.start_consuming()
+
+# General callback for RabbitMQ consumer
+def generic_callback(queue_name):
+    """
+    Returns a pika callback function that handles messages
+    based on the queue_name.
+    """
+    def callback(ch, method, properties, body):
+        try:
+            message = json.loads(body)
+            if queue_name == "users_queue":
+                player_event_handler(message)
+            # add other queues here:
+            # elif queue_name == "items_queue":
+            #     items_queue_handler(message)
+            else:
+                print(f"No handler defined for queue '{queue_name}'")
+        except Exception as e:
+            print(f"Error processing message from queue '{queue_name}': {e}")
+    return callback
+
+# Event handler for user events for RabbitMQ consumer
+def player_event_handler(message):
     with current_app.app_context():
         try:
+            event_type = message.get("event")
+            user_id = message.get("user_id")
             if event_type == 'user_deleted':
                 # Delete associated player data
                 player = Player.query.filter_by(user_id=user_id).first()
