@@ -34,7 +34,8 @@ with app.app_context():
     
 def consume_player_events():
     try: 
-        connection = pika.BlockingConnection(pika.ConnectionParameters(host=config.RABBITMQ))
+        credentials = pika.PlainCredentials(config.RABBITMQ_USER, config.RABBITMQ_PASS)
+        connection = pika.BlockingConnection(pika.ConnectionParameters(host=config.RABBITMQ, credentials=credentials))
         channel = connection.channel()
         channel.queue_declare(queue='users_queue', durable=True)
 
