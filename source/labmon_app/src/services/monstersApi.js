@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 const monstersApi = axios.create({
-  baseURL: '/api/monsters', 
-  // baseURL: "http://localhost:5002/monsters",
+  // baseURL: '/api/monsters', 
+  baseURL: "http://localhost:5002/monsters",
   timeout: 10000
 })
 

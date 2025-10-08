@@ -7,6 +7,8 @@ import Register from '../views/Register.vue'
 import Collection from '../views/Collection.vue'
 import Profile from '../views/Profile.vue'
 import AdminPanel from '../views/AdminPanel.vue'
+import Encounter from '../views/Encounter.vue'
+import { useEncounterStore } from '../stores/encunterStore'
 
 const routes = [
   { path: '/', name: 'Home', component: Home, meta: { userOnly: true } },
@@ -15,6 +17,7 @@ const routes = [
   { path: '/collection', name: 'Collection', component: Collection, meta: { userOnly: true } },
   { path: '/profile', name: 'Profile', component: Profile, meta: { userOnly: true } },
   { path: '/admin_panel', name: 'Admin Panel', component: AdminPanel, meta: { adminOnly: true } },
+  { path: '/encounter', name: 'Encounter', component: Encounter, meta: { isEncounterActive: true } },
 ]
 
 const router = createRouter({
@@ -24,8 +27,13 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore()
+  const encounterStore = useEncounterStore()
 
   if (to.meta.guestOnly && authStore.isAuthenticated) {
+    return next('/')
+  }
+
+  if (to.meta.isEncounterActive && !encounterStore.isEncounterActive) {
     return next('/')
   }
 

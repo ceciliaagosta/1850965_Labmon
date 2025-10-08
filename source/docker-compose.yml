@@ -3,6 +3,8 @@ services:
   rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbitmq
+    depends_on:
+      - db
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -26,6 +28,22 @@ services:
       - pgdata:/var/lib/postgresql/data:Z
     networks:
       - labap_network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: labmon_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin:Z
+    networks:
+      - labap_network
+
 
   auth_api:
     build: ./auth_api
@@ -120,3 +138,4 @@ networks:
 
 volumes:
   pgdata:
+  pgadmin_data:
