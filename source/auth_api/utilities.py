@@ -5,7 +5,8 @@ import json
 import config 
 
 def publish_message(event_type, user_id):
-    connection = pika.BlockingConnection(pika.ConnectionParameters(config.RABBITMQ_HOST))
+    credentials = pika.PlainCredentials(config.RABBITMQ_USER, config.RABBITMQ_PASS)
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=config.RABBITMQ, credentials=credentials))
     channel = connection.channel()
     channel.queue_declare(queue='users_queue')
 
