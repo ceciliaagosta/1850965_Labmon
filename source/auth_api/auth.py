@@ -31,6 +31,8 @@ with app.app_context():
                 db.session.add(admin)
                 db.session.commit()
                 print("Default admin user created: admin / password")
+                utilities.publish_message('user_created', admin.id)
+                print("Admin added to Players table")
             break
         except sqlalchemy.exc.OperationalError:
             retries -= 1
