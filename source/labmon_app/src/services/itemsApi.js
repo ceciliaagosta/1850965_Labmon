@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 const itemsApi = axios.create({
-  // baseURL: '/api/items', 
-  baseURL: "http://localhost:5003/items",
+  baseURL: '/api/items', 
+  // baseURL: "http://localhost:5003/items",
   timeout: 10000
 })
 
