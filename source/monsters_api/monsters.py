@@ -6,6 +6,7 @@ import config
 from functools import wraps
 import time
 import sqlalchemy.exc
+import utilities
 
 ALLOWED_FIELDS = {'name', 'rarity', 'catch_rate', 'collection', 'sprite'}
 
@@ -90,7 +91,7 @@ def add_monster(data):
     
     db.session.add(new_monster)
     db.session.commit()
-    
+    utilities.publish_message('monster_created', new_monster.id,new_monster.catch_rate,new_monster.rarity,new_monster.collection)    
     return jsonify(new_monster.to_dict()), 200
 
 # Get, update, or delete a specific monster by ID
@@ -120,6 +121,7 @@ def update_monster(data, monster_id):
         setattr(monster, key, update_data[key])
     
     db.session.commit()
+    utilities.publish_message('monster_updated', monster_id, monster.catch_rate, monster.rarity, monster.collection)
     return jsonify(monster.to_dict()), 200
 
 @app.route('/monsters/<int:monster_id>', methods=['DELETE'])
@@ -128,6 +130,7 @@ def delete_monster(data, monster_id):
     monster = Monster.query.get_or_404(monster_id)
     db.session.delete(monster)
     db.session.commit()
+    utilities.publish_message('monster_deleted', monster_id, monster.catch_rate, monster.rarity, monster.collection)
     return jsonify({'message': 'Monster deleted'}), 200
 
 

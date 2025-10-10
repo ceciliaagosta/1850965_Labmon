@@ -105,9 +105,10 @@ def generic_callback(queue_name, app):
                 message = json.loads(body)
                 if queue_name == "users_queue":
                     player_event_handler(message)
-                    # add other queues here:
-                    # elif queue_name == "items_queue":
-                    #     items_queue_handler(message)
+                elif queue_name == "monsters_queue":
+                    monster_event_handler(message)
+                elif queue_name == "items_queue":
+                    item_event_handler(message)
                 else:
                     print(f"No handler defined for queue '{queue_name}'")
             except Exception as e:
@@ -133,6 +134,73 @@ def player_event_handler(message):
                 db.session.add(new_player)
                 db.session.commit()
                 print(f"Created player data for player_id {user_id}")
+    except Exception as e:
+        print(f"Error handling event: {e}")
+        pass
+
+def monster_event_handler(message):
+    try:
+        event_type = message.get("event")
+        monster_id = message.get("monster_id")
+        catch_rate = message.get("catch_rate")
+        rarity = message.get("rarity")
+        collection = message.get("collection")
+        if event_type == 'monster_deleted':
+            # Delete associated monster data
+            monster = MonsterStats.query.filter_by(monster_id=monster_id).first()
+            if monster:
+                db.session.delete(monster)
+                db.session.commit()
+                print(f"Deleted monster data for monster_id {monster_id}")
+        elif event_type == 'monster_created':
+            # Create associated monster data if not exists
+            if not MonsterStats.query.filter_by(monster_id=monster_id).first():
+                new_monster = MonsterStats(monster_id=monster_id, catch_rate=catch_rate, rarity=rarity, collection=collection)
+                db.session.add(new_monster)
+                db.session.commit()
+                print(f"Created monster data for monster_id {monster_id}")
+        elif event_type == 'monster_updated':
+            # Update associated monster data if exists
+            monster = MonsterStats.query.filter_by(monster_id=monster_id).first()
+            if monster:
+                monster.catch_rate = catch_rate
+                monster.rarity = rarity
+                monster.collection = collection
+                db.session.commit()
+                print(f"Updated monster data for monster_id {monster_id}")
+    except Exception as e:
+        print(f"Error handling event: {e}")
+        pass
+
+
+def item_event_handler(message):
+    try:
+        event_type = message.get("event")
+        item_id = message.get("item_id")
+        price = message.get("price")
+        effect = message.get("effect")
+        if event_type == 'item_deleted':
+            # Delete associated item data
+            item = ItemStats.query.filter_by(item_id=item_id).first()
+            if item:
+                db.session.delete(item)
+                db.session.commit()
+                print(f"Deleted item data for item_id {item_id}")
+        elif event_type == 'item_created':
+            # Create associated item data if not exists
+            if not ItemStats.query.filter_by(item_id=item_id).first():
+                new_item = ItemStats(item_id=item_id, price=price, effect=effect)
+                db.session.add(new_item)
+                db.session.commit()
+                print(f"Created item data for item_id {item_id}")
+        elif event_type == 'item_updated':
+            # Update associated item data if exists
+            item = ItemStats.query.filter_by(item_id=item_id).first()
+            if item:
+                item.price = price
+                item.effect = effect
+                db.session.commit()
+                print(f"Updated item data for item_id {item_id}")
     except Exception as e:
         print(f"Error handling event: {e}")
         pass

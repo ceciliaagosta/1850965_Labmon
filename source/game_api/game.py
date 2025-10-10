@@ -192,4 +192,8 @@ def catch_monster(data, encounter_id):
 if __name__ == '__main__':
     threading.Thread(
     target=lambda: utilities.start_consumer(app, "users_queue", utilities.generic_callback("users_queue", app), config.RABBITMQ_HOST, retries=5), daemon=True).start()
+    threading.Thread(
+        target=lambda: utilities.start_consumer(app, "monsters_queue", utilities.generic_callback("monsters_queue", app), config.RABBITMQ_HOST, retries=5), daemon=True).start()
+    threading.Thread(
+        target=lambda: utilities.start_consumer(app, "items_queue", utilities.generic_callback("items_queue", app), config.RABBITMQ_HOST, retries=5), daemon=True).start()
     app.run(host="0.0.0.0", port=5000, debug=True, use_reloader=False) # TODO: Remove debug=True in production

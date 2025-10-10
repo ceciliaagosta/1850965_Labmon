@@ -6,6 +6,7 @@ import jwt
 from functools import wraps
 import time
 import sqlalchemy.exc
+import utilities
 
 ALLOWED_FIELDS={'name','price','description', 'effect', 'sprite'}
 
@@ -91,6 +92,7 @@ def add_item(data):
     
     db.session.add(new_item)   
     db.session.commit() 
+    utilities.publish_message('item_created', new_item.id, new_item.price, new_item.effect)
     return jsonify(new_item.to_dict()), 200
 
 # Get, update, delete user by ID (self or admin)
@@ -120,6 +122,7 @@ def update_item(data, item_id):
         setattr(item, key, update_data[key])
 
     db.session.commit()
+    utilities.publish_message('item_updated', item_id, item.price, item.effect)
     return jsonify(item.to_dict()), 200
 
 
@@ -130,6 +133,7 @@ def delet_item(data, item_id):
     item = Item.query.get_or_404(item_id)
     db.session.delete(item)
     db.session.commit()
+    utilities.publish_message('item_deleted', item_id, item.price, item.effect)
     return jsonify({'message': 'Item deleted'}), 200
 
 if __name__ == '__main__':

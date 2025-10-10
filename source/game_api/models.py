@@ -121,7 +121,6 @@ class ItemStats(db.Model):
     def to_dict(self):
         return {
             'item_id': self.item_id,
-            'name': self.name,
             'price': self.price,
             'effect': self.effect,
         }
