@@ -39,7 +39,7 @@ with app.app_context():
                 db.session.add(item4)
                 utilities.publish_message('item_created', item4.id, item4.price, item4.effect)
 
-                item5 = Item(name="Quantum Request", price=60, description="Sends infinite asynchronous capture attempts until one succeeds (enormous effect)", effect=1.1, sprite="default_sprite.png")
+                item5 = Item(name="Quantum Request", price=60, description="Sends infinite asynchronous capture attempts until one succeeds (enormous effect)", effect=3, sprite="default_sprite.png")
                 db.session.add(item5)
                 utilities.publish_message('item_created', item5.id, item5.price, item5.effect)
 
