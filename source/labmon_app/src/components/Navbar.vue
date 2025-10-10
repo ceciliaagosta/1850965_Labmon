@@ -30,6 +30,8 @@
         </ul>
 
         <ul class="navbar-nav">
+          <!-- Money counter -->
+           
           <!-- Account dropdown if logged in -->
           <li class="nav-item dropdown" v-if="authStore.isAuthenticated">
             <a
