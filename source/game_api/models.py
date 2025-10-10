@@ -34,6 +34,7 @@ class Player(db.Model):
     player_id = db.Column(db.Integer, primary_key=True)
     currency = db.Column(db.Float, nullable=False, default=200)
     lastEncounter_id = db.Column(db.Integer, nullable=True)
+    timer_start = db.Column(db.DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
     collections_completed = db.Column(JSON, nullable=False, default=list)
 
     def to_dict(self):

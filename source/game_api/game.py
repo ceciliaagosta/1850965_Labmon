@@ -78,10 +78,10 @@ def generate_encounter(data):
     user_id = data.get('user_id')
     player = Player.query.filter_by(player_id=user_id).first()
     last_encounter = player.lastEncounter_id
-    last_encounter_time = Encounter.query.filter_by(id=last_encounter).first().timestamp if last_encounter else None
+    start_timer = player.timer_start if last_encounter else None
 
     # Determine rarity based on time since last encounter
-    weights = utilities.rarity_weights(last_encounter_time)
+    weights = utilities.rarity_weights(start_timer)
     rarity = utilities.choose_rarity(weights)
     if rarity == 0:
         return jsonify({'message': 'No encounter this time'}), 403
@@ -187,6 +187,17 @@ def catch_monster(data, encounter_id):
     
     else:
         return jsonify({'message': 'Failed to catch the monster.', 'player_currency': player.currency}), 200
+    
+# Signal start of timer for encounter generation
+@app.route('/game/timer', methods=['POST'])
+@token_required
+def start_timer(data):
+    player = Player.query.filter_by(player_id=data.get('user_id')).first()
+    if not player:
+        return jsonify({'error': 'Player not found'}), 404
+    player.timer_start = datetime.now(timezone.utc)
+    db.session.commit()
+    return jsonify({'message': 'Timer started', 'start_time': player.timer_start}), 200
     
 
 if __name__ == '__main__':

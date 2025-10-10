@@ -29,7 +29,8 @@ def retry_connection(connect_fn, retries=5, delay=3, backoff=2):
             time.sleep(current_delay)
             current_delay *= backoff
 
-def publish_message(event_type, monster_id,catch_rate,rarity,collection):
+# Publish message to RabbitMQ
+def publish_message(event_type, monster_id, catch_rate, rarity, collection):
     def connect():
         credentials = pika.PlainCredentials(config.RABBITMQ_USER, config.RABBITMQ_PASS)
         return pika.BlockingConnection(pika.ConnectionParameters(host=config.RABBITMQ_HOST, credentials=credentials))
