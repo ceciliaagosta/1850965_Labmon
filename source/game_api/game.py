@@ -90,12 +90,13 @@ def generate_encounter(data):
     encounter_pool = MonsterStats.query.filter_by(rarity=rarity).all()
     if not encounter_pool:
         return jsonify({'error': 'No monsters available for this rarity'}), 500
-    selected_monster = utilities.select_monster(encounter_pool)
+    selected_monster = utilities.select_monster(encounter_pool).monster_id
 
     # Create and store the encounter
-    encounter = Encounter(player_id=player, monster_id=selected_monster, isCaught=False)
-    player.lastEncounter_id = encounter.id
+    encounter = Encounter(player_id=player.player_id, monster_id=selected_monster, isCaught=False)
     db.session.add(encounter)
+    db.session.flush()  # Get encounter ID before commit
+    player.lastEncounter_id = encounter.id
     db.session.commit()
 
     return jsonify({'message': 'Encounter generated', 'encounter_id': encounter.id, 'monster_id': selected_monster}), 200
@@ -124,7 +125,11 @@ def delete_encounter(data, encounter_id):
 @app.route('/game/encounters/<int:encounter_id>/catch', methods=['POST'])
 @token_required
 def catch_monster(data, encounter_id):
-    body = request.get_json() or {}
+    if request.is_json:
+        body = request.get_json()
+    else:
+        body = {}
+        
     item_id = body.get('item_id')
 
     player = Player.query.filter_by(player_id=data.get('user_id')).first()
@@ -141,7 +146,7 @@ def catch_monster(data, encounter_id):
         return jsonify({'error': 'Monster already caught'}), 400
     
     # Check if the monster exists
-    monster = MonsterStats.query.filter_by(id=encounter.monster_id).first()
+    monster = MonsterStats.query.filter_by(monster_id=encounter.monster_id).first()
     if not monster:
         return jsonify({'error': 'Monster data not found'}), 500
     catch_rate = monster.catch_rate
@@ -152,7 +157,7 @@ def catch_monster(data, encounter_id):
         item = None  # No item used
         item_effect = 1  # Default effect
     else:
-        item = ItemStats.query.filter_by(id=item_id).first()
+        item = ItemStats.query.filter_by(item_id=item_id).first()
         if not item:
             return jsonify({'error': 'Item data not found'}), 500
         

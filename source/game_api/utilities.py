@@ -46,7 +46,7 @@ def choose_rarity(weights):
 
 # Monster selection function
 def select_monster(encounter_pool):
-    return random.choice(encounter_pool)[0]  # return the first element which is the monster_id
+    return random.choice(encounter_pool)  # return the first element which is the monster_id
 
 # Catch attempt function
 def attempt_catch(catch_rate, item_effect):
