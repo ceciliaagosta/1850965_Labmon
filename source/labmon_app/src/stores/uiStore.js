@@ -7,7 +7,7 @@ import { ref, computed, stop } from 'vue'
 export const useUiStore = defineStore('ui', () => {
   const authStore = useAuthStore()
   const encounterStore = useEncounterStore()
-  const errors = []
+  const notifications = ref([])
   const showNavbar = computed(() => (authStore.isAuthenticated && !encounterStore.isEncounterActive))
   const showCatchSuccess = ref(false)
   const showCatchFail = ref(false)
@@ -15,6 +15,11 @@ export const useUiStore = defineStore('ui', () => {
   const timerIsRunning = ref(false)
   const time = ref(0)
   const intervalId = ref(null)
+
+  function showNotification(message, type) {
+    const notification = {"message": message, "type": type}
+    notifications.value.push(notification)
+  }
 
   async function startTimer() {
     if (timerIsRunning.value) return
@@ -42,13 +47,14 @@ export const useUiStore = defineStore('ui', () => {
   }
 
   return {
-    errors,
+    notifications,
     showNavbar,
     showCatchSuccess,
     showCatchFail,
     reward,
     time,
     timerIsRunning,
+    showNotification,
     startTimer,
     stopTimer
   }

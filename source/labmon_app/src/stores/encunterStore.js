@@ -15,6 +15,7 @@ export const useEncounterStore = defineStore('encounter', () => {
         const res = await _fetchAllEncounters()
       } catch (err) {
         console.log(err)
+        uiStore.showNotification(err.response.data.error, "error")
       }
     }
 
@@ -28,7 +29,12 @@ export const useEncounterStore = defineStore('encounter', () => {
         const res = await _generateEncounter()
         encounterData.value = res.data
       } catch (err) {
+        if (err.status === 403) {
+          uiStore.showNotification("You didn't find a monster", "info")
+          return
+        } 
         console.log(err)
+        uiStore.showNotification(err.response.data.error, "error")
       }
     }
 
@@ -37,6 +43,7 @@ export const useEncounterStore = defineStore('encounter', () => {
         const res = await _startTimer()
       } catch (err) {
         console.log(err)
+        uiStore.showNotification(err.response.data.error, "error")
       }
     }
 
@@ -45,6 +52,7 @@ export const useEncounterStore = defineStore('encounter', () => {
         const res = await _fetchEncounter(encounterId)
       } catch (err) {
         console.log(err)
+        uiStore.showNotification(err.response.data.error, "error")
       }
     }
 
@@ -53,6 +61,7 @@ export const useEncounterStore = defineStore('encounter', () => {
         const res = await _quitEncounter(encounterId)
       } catch (err) {
         console.log(err)
+        uiStore.showNotification(err.response.data.error, "error")
       }
       router.push('/')
     }
@@ -70,7 +79,8 @@ export const useEncounterStore = defineStore('encounter', () => {
         }
         router.push('/')
       } catch (err) {
-        console.log(err)
+        console.log(err.message)
+        uiStore.showNotification(err.message, "error")
       }
     }
 

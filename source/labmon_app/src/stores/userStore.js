@@ -16,6 +16,7 @@ export const useUserStore = defineStore('user', () => {
       } 
       const message = error.response.data.error
       console.log(message)
+      uiStore.showNotification(error.response.data.error, "error")
     }
   }
 
@@ -30,6 +31,7 @@ export const useUserStore = defineStore('user', () => {
       } 
       const message = error.response.data.error
       console.log(message)
+      uiStore.showNotification(error.response.data.error, "error")
       return message
     }
   }
@@ -44,6 +46,7 @@ export const useUserStore = defineStore('user', () => {
       } 
       const message = error.response.data.error
       console.log(message)
+      uiStore.showNotification(error.response.data.error, "error")
     }
   }
 
@@ -58,6 +61,7 @@ export const useUserStore = defineStore('user', () => {
       } 
       const message = error.response.data.error
       console.log(message)
+      uiStore.showNotification(error.response.data.error, "error")
       return message
     }
   }
@@ -72,6 +76,7 @@ export const useUserStore = defineStore('user', () => {
       } 
       const message = error.response.data.error
       console.log(message)
+      uiStore.showNotification(error.response.data.error, "error")
     }
   }
 

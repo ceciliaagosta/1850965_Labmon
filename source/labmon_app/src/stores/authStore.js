@@ -4,6 +4,7 @@ import { _login, _register } from '../services/usersApi'
 import { jwtDecode } from 'jwt-decode'
 import router from '../router'
 import { useUserStore } from './userStore'
+import { useUiStore } from './uiStore'
 
 export const useAuthStore = defineStore('auth', () => {
   const token = ref(localStorage.getItem('token') || null)
@@ -12,6 +13,8 @@ export const useAuthStore = defineStore('auth', () => {
   const user = ref(null)
   const isAuthenticated = computed(() => !!token.value)
   const isAdmin = computed(() => role.value === 'admin')
+
+  const uiStore = useUiStore()
 
   function setToken(newToken) {
     token.value = newToken
@@ -36,6 +39,7 @@ export const useAuthStore = defineStore('auth', () => {
     } catch (error) {
       const message = error.response.data.error
       console.log(message)
+      uiStore.showNotification(message, "error")
     }
   }
 
@@ -52,6 +56,7 @@ export const useAuthStore = defineStore('auth', () => {
     } catch (error) {
       const message = error.response.data.error
       console.log(message)
+      uiStore.showNotification(message, "error")
     }
   }
 
@@ -75,6 +80,7 @@ export const useAuthStore = defineStore('auth', () => {
       } catch (error) {
         console.warn('Auth rehydration failed, logging out:', error)
         logout()
+        uiStore.showNotification(error.response.data.error, "error")
       }
     }
   }

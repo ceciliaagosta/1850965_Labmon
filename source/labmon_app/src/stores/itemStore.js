@@ -17,6 +17,7 @@ export const useItemStore = defineStore('item', () => {
       } 
       const message = error.response.data.error
       console.log(message)
+      uiStore.showNotification(error.response.data.error, "error")
     }
   }
 
@@ -31,6 +32,7 @@ export const useItemStore = defineStore('item', () => {
       } 
       const message = error.response.data.error
       console.log(message)
+      uiStore.showNotification(error.response.data.error, "error")
       return message
     }
   }
@@ -45,6 +47,7 @@ export const useItemStore = defineStore('item', () => {
       } 
       const message = error.response.data.error
       console.log(message)
+      uiStore.showNotification(error.response.data.error, "error")
     }
   }
 
@@ -59,6 +62,7 @@ export const useItemStore = defineStore('item', () => {
       } 
       const message = error.response.data.error
       console.log(message)
+      uiStore.showNotification(error.response.data.error, "error")
       return message
     }
   }
@@ -73,6 +77,7 @@ export const useItemStore = defineStore('item', () => {
       } 
       const message = error.response.data.error
       console.log(message)
+      uiStore.showNotification(error.response.data.error, "error")
     }
   }
 

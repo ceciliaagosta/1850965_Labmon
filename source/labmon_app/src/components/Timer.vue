@@ -24,7 +24,8 @@ const formattedTime = computed(() => {
 .timer-display {
   font-size: 6rem;
   margin-bottom: 2rem;
-  background: #2c2c44;
+  color: #20ff60;
+  background: #202020;
   padding: 1rem 2rem;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
