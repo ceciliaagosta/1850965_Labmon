@@ -9,16 +9,23 @@ export const useUiStore = defineStore('ui', () => {
   const encounterStore = useEncounterStore()
   const errors = []
   const showNavbar = computed(() => (authStore.isAuthenticated && !encounterStore.isEncounterActive))
+  const showCatchSuccess = ref(false)
+  const showCatchFail = ref(false)
+  const reward = ref(0)
   const timerIsRunning = ref(false)
   const time = ref(0)
   const intervalId = ref(null)
 
   async function startTimer() {
     if (timerIsRunning.value) return
+    encounterStore.startTimer()
+
     timerIsRunning.value = true
 
     intervalId.value = setInterval(() => {
-      time.value += 1
+      if (time.value <= 60 * 60 * 99) {
+        time.value += 1
+      }
     }, 1000)
   }
 
@@ -37,6 +44,9 @@ export const useUiStore = defineStore('ui', () => {
   return {
     errors,
     showNavbar,
+    showCatchSuccess,
+    showCatchFail,
+    reward,
     time,
     timerIsRunning,
     startTimer,

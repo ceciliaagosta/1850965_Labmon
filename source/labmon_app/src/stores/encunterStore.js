@@ -1,15 +1,18 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { _catchEncounter, _fetchAllEncounters, _fetchEncounter, _quitEncounter } from '../services/gameApi'
+import { _catchEncounter, _fetchAllEncounters, _fetchEncounter, _generateEncounter, _quitEncounter, _startTimer } from '../services/gameApi'
 import router from '../router'
+import { useUiStore } from './uiStore'
 
 export const useEncounterStore = defineStore('encounter', () => {
   const encounterData = ref(null)
   const isEncounterActive = computed(() => !!encounterData.value)
 
+  const uiStore = useUiStore()
+
     async function fetchAllEncounters() {
       try {
-        const res = _fetchAllEncounters()
+        const res = await _fetchAllEncounters()
       } catch (err) {
         console.log(err)
       }
@@ -21,12 +24,25 @@ export const useEncounterStore = defineStore('encounter', () => {
     }
 
     async function requestEncounter() {
-      return
+      try {
+        const res = await _generateEncounter()
+        encounterData.value = res.data
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    async function startTimer() {
+      try {
+        const res = await _startTimer()
+      } catch (err) {
+        console.log(err)
+      }
     }
 
     async function fetchEncounter(encounterId) {
       try {
-        const res = _fetchEncounter(encounterId)
+        const res = await _fetchEncounter(encounterId)
       } catch (err) {
         console.log(err)
       }
@@ -34,16 +50,25 @@ export const useEncounterStore = defineStore('encounter', () => {
 
     async function escapeEncounter(encounterId) {
       try {
-        // const res = _quitEncounter(encounterId)
-        router.push('/')
+        const res = await _quitEncounter(encounterId)
       } catch (err) {
         console.log(err)
       }
+      router.push('/')
     }
 
     async function catchMonster(encounterId) {
       try {
-        const res = _catchEncounter(encounterId)
+        const res = await _catchEncounter(encounterId)
+        console.log(res.data)
+        if (res.data.message == "Monster caught successfully!") {
+          uiStore.showCatchSuccess = true
+          uiStore.reward = res.data.reward
+        }
+        if (res.data.message == "Failed to catch the monster.") {
+          uiStore.showCatchFail = true
+        }
+        router.push('/')
       } catch (err) {
         console.log(err)
       }
@@ -58,6 +83,7 @@ export const useEncounterStore = defineStore('encounter', () => {
     isEncounterActive,
     fetchAllEncounters,
     requestEncounter,
+    startTimer,
     fetchEncounter,
     escapeEncounter,
     catchMonster,
