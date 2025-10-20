@@ -80,11 +80,18 @@ def generate_encounter(data):
     last_encounter = player.lastEncounter_id
     start_timer = player.timer_start if last_encounter else None
 
-    # Determine rarity based on time since last encounter
-    weights = utilities.rarity_weights(start_timer)
-    rarity = utilities.choose_rarity(weights)
-    if rarity == 0:
-        return jsonify({'message': 'No encounter this time'}), 403
+    if user_id == 1:
+        # Test user: use test rarity weights
+        weights = utilities.rarity_weights(start_timer, delay=1)
+        rarity = utilities.choose_rarity(weights)
+        if rarity == 0:
+            return jsonify({'message': '[TEST] No encounter this time'}), 403
+    else:
+        # Determine rarity based on time since last encounter
+        weights = utilities.rarity_weights(start_timer)
+        rarity = utilities.choose_rarity(weights)
+        if rarity == 0:
+            return jsonify({'message': 'No encounter this time'}), 403
 
     # Select a monster from the database based on rarity
     encounter_pool = MonsterStats.query.filter_by(rarity=rarity).all()

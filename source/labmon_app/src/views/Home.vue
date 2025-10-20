@@ -36,9 +36,11 @@ const uiStore = useUiStore()
 const encounterStore = useEncounterStore()
 
 async function handleStartEncounter() {
-    const elapsedTime = uiStore.stopTimer()
-    await encounterStore.requestEncounter()
-    router.push("/encounter")
+    var result = await encounterStore.requestEncounter()
+    if (result) {
+        const elapsedTime = uiStore.stopTimer()
+        router.push("/encounter")
+    }
 }
 </script>
 

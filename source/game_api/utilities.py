@@ -7,15 +7,15 @@ import time
 import json
 import pika
 from pika.exceptions import AMQPConnectionError
-
+    
 # Rarity weight function - returns a weights for rarity levels 1 to 5 based on time passed since last encounter
-def rarity_weights(last_encounter_time):
+def rarity_weights(last_encounter_time, delay=30):
     if last_encounter_time is None:
         return [1, 0, 0, 0, 0]  # if first encounter ever, only rarity 1
     
     time_diff = (datetime.now(timezone.utc) - last_encounter_time).total_seconds() / 60  # in minutes
 
-    if time_diff < 30:
+    if time_diff < delay:
         return []
     
     # Define base weights for rarities 1 to 5
@@ -23,7 +23,7 @@ def rarity_weights(last_encounter_time):
 
     # Increase weights for higher rarities based on time passed
     # Every half hour passed increases chance of rare monsters slightly
-    factor = min(time_diff / 30, 3)  # cap effect at 3 hours
+    factor = min(time_diff / delay, 3) # cap effect at 3 hours
 
     # Shift weight toward rare monsters
     adjusted = [

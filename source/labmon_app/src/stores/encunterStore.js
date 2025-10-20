@@ -28,10 +28,11 @@ export const useEncounterStore = defineStore('encounter', () => {
       try {
         const res = await _generateEncounter()
         encounterData.value = res.data
+        return true
       } catch (err) {
         if (err.status === 403) {
           uiStore.showNotification("You didn't find a monster", "info")
-          return
+          return false
         } 
         console.log(err)
         uiStore.showNotification(err.response.data.error, "error")
