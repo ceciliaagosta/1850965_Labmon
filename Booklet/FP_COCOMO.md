@@ -59,57 +59,87 @@
 | **Total EQ = 33 FP**  |     |     |            |        |
 
 **Total UFP = ILF (36) + EIF (0) + EI (64) + EO (0) + EQ (33) = 97**\
-Assuming the VAF to be 1.00, $\Rightarrow$ **AFP = UFP × VAF = 97 × 1.00 = 97 FP**
+
+Considering the 14 GSCs being rated as below:
+
+| GSC                    | Rating | 
+| --------------------- | --: | 
+| Data communication      |   4 | 
+| Distributed data processing      |   4 | 
+| Performance     |   3 |  
+| Heavily used configuration |   2 | 
+| Transaction rate |   3 | 
+| On-line data entry |   4 | 
+| End-user efficiency |   4 | 
+| On-line update |   4 | 
+| Complex processing |   3 | 
+| Reusability |   3 | 
+| Installation ease |   3 | 
+| Operational ease |   4 | 
+| Multiple sites |   2 | 
+| Facilitate change |   3 | 
+| **Total = 46**  |     | 
+
+Computing the **VAF = 0.65 + (0.01 * ΣGSC) = 0.65 + (0.01 * 46) = 1.11**, we get the Adjusted Function points as **AFP = UFP × VAF = 97 × 1.11 = 107.67 FP**
 
 ## LOC
-Coefficient LOC/FP for the technologies used: 
 
-let's assume two third of the code is frontend: 
-React+TypeScript: 30–40 LOC/FP (UI + API calls). 
+Let's assume two thirds of the code is frontend: 
+Vue + TypeScript: 45–50 LOC/FP (UI + API calls). 
 
-One third of the code is Backened:
-Node/Express (TS): 30-45 LOC/FP (routing, service, validation).
+One third of the code is backend:
+Python: 42 LOC/FP (routing, service, validation).
 
-FE 58 FP × 30 = 1.7k\
-BE 28 FP × 30 ≈ 0.8k\
-**Total ≈ 2.5KLOC**
+FE 71.78 FP × 45 = 3.2k\
+BE 35.89 FP × 42 ≈ 1.5k\
+**Total ≈ 4.7 KLOC**
 
-# COCOCMO II
+# COCOMO II
 
 ## COCOMO II Results (Post-Architecture Model)
 
-- **Size estimate:** ~2.5 KLOC   
+- **Size estimate:** ~4.7 KLOC   
 - **Constants:**  
   - A = 2.94  
   - B = 0.91  
   - C = 3.67  
   - D = 0.28  
 
-- **Scale Factors (ΣSF):** ≈ 17.7  
-- **Exponent (E):** 0.91 + 0.01 × 17.7 ≈ **1.087**  
+Using the official COCOMO II calibration table, we compute the 5 scale factors:
+
+| Scale Factor                    | Rating | 
+| --------------------- | --: | 
+| PREC     |   2.48 (High) | 
+| FLEX     |   1.01 (Very high) | 
+| RESL     |   5.07 (Nominal) |  
+| TEAM     |   1.10 (Very High) | 
+| PMAT     |   4.68 (Nominal) | 
+
+- **Scale Factors (ΣSF):** ≈ 14.34  
+- **Exponent (E):** 0.91 + 0.01 × 14.34 ≈ **1.053**  
 - **Effort Multipliers (ΠEM):** ≈ 1.0 (nominal case)  
 
 ### Effort (Person-Months)
 $PM = A \times Size^E \times \prod EM$  
-$PM = 2.94 \times 2.5^{1.087} \times 1.0 ≈ 5 \, \text{PM}$
+$PM = 2.94 \times 4.7^{1.053} \times 1.0 ≈ 14.9 \, \text{PM}$
 
-**Estimated effort:** ~5 person-months  
+**Estimated effort:** ~15 person-month
 
 ---
 
 ### Schedule (Time to Develop)
 $TDEV = C \times PM^F$ 
-where  
-$F = D + 0.2 \times (E - B) = 0.28 + 0.2 \times (1.087 - 0.91) ≈ 0.315$
-$TDEV = 3.67 \times 5^{0.315} ≈ 5.5 \, \text{months}$
+where
+$F = D + 0.2 \times (E - B) = 0.28 + 0.2 \times (1.053 - 0.91) ≈ 0.308$
+$TDEV = 3.67 \times 15^{0.308} ≈ 8.45 \, \text{months}$
 
-**Estimated schedule:** ~5 months  
+**Estimated schedule:** ~8 months  
 
 ---
 
 ## Actual Outcome
 
-Despite COCOMO II predicting **4 PM** and a **5-month schedule**, we successfully delivered the project in **4 months** with a **5-person team**.
+Despite COCOMO II predicting **15 PM** and a **8-month schedule** (meaning a staffing of ~2 people), we successfully delivered the project in **2 months** with a **3-person team**.
 
 ### How we achieved this:
 1. **Full parallelization** of tasks across frontend, backend, and DB.  
