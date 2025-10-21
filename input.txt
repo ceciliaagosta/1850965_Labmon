@@ -22,22 +22,21 @@ The project is a browser monster collector game web application. Players can col
 16. As a Player, I want to receive a reward (in-game currency) for completing a collection, so that my effort feels meaningful  
 17. As a Player, I want duplicates to be clearly marked in my collection, so that I know what can be safely “sharded”  
 18. As a Player, I want the game to track capture statistics, so that I feel motivated to improve  
-19. As a Player, I want to be notified if an Admin deletes my account, so that I know my data has been canceled  
-20. As an Admin, I want to login in the site, so that I can manage the system  
-21. As an Admin, I want to not put my credentials in the site every time a reload the site, so that I can use the site  
-22. As an Admin, I want to logout, so that no one else can use my account  
-23. As an Admin, I want to access my account, so that I can edit my personal information  
-24. As an Admin, I want to access my account, so that I can delete my personal information  
-25. As an Admin, I want a secure dashboard, so that only authorized admins can manage content  
-26. As an Admin, I want to see all users' accounts, so that I can have a clear view of the people in the system  
-27. As an Admin, I want to edit users' accounts, so that I can help users in managing their personal information  
-28. As an Admin, I want to delete users' accounts, so that I can remove malicious users from the system  
-29. As an Admin, I want to create new users, so that I can add new admins or users to the system  
-30. As an Admin, I want to access monsters' information, so that I can have a clear view of monsters in the system  
-31. As an Admin, I want to edit monsters' information, so that I can better balance the game  
-32. As an Admin, I want to delete monsters' information, so that I can remove obsolete creatures from the system  
-33. As an Admin, I want to create new monsters, so that I can add more creatures for the players  
-34. As an Admin, I want to access items' information, so that I can have a clear view of items in the system  
-35. As an Admin, I want to edit items' information, so that I can better balance the game  
-36. As an Admin, I want to delete items' information, so that I can remove obsolete items from the system  
-37. As an Admin, I want to create new items, so that I can add more items for the players  
+19. As an Admin, I want to login in the site, so that I can manage the system  
+20. As an Admin, I want to not put my credentials in the site every time a reload the site, so that I can use the site  
+21. As an Admin, I want to logout, so that no one else can use my account  
+22. As an Admin, I want to access my account, so that I can edit my personal information  
+23. As an Admin, I want to access my account, so that I can delete my personal information  
+24. As an Admin, I want a secure dashboard, so that only authorized admins can manage content  
+25. As an Admin, I want to see all users' accounts, so that I can have a clear view of the people in the system  
+26. As an Admin, I want to edit users' accounts, so that I can help users in managing their personal information  
+27. As an Admin, I want to delete users' accounts, so that I can remove malicious users from the system  
+28. As an Admin, I want to create new users, so that I can add new admins or users to the system  
+29. As an Admin, I want to access monsters' information, so that I can have a clear view of monsters in the system  
+30. As an Admin, I want to edit monsters' information, so that I can better balance the game  
+31. As an Admin, I want to delete monsters' information, so that I can remove obsolete creatures from the system  
+32. As an Admin, I want to create new monsters, so that I can add more creatures for the players  
+33. As an Admin, I want to access items' information, so that I can have a clear view of items in the system  
+34. As an Admin, I want to edit items' information, so that I can better balance the game  
+35. As an Admin, I want to delete items' information, so that I can remove obsolete items from the system  
+36. As an Admin, I want to create new items, so that I can add more items for the players  

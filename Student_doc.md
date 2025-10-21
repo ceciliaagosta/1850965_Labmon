@@ -22,25 +22,24 @@ The project is a browser monster collector game web application. Players can col
 16. As a Player, I want to receive a reward (in-game currency) for completing a collection, so that my effort feels meaningful  
 17. As a Player, I want duplicates to be clearly marked in my collection, so that I know what can be safely “sharded”  
 18. As a Player, I want the game to track capture statistics, so that I feel motivated to improve  
-19. As a Player, I want to be notified if an Admin deletes my account, so that I know my data has been canceled  
-20. As an Admin, I want to login in the site, so that I can manage the system  
-21. As an Admin, I want to not put my credentials in the site every time a reload the site, so that I can use the site  
-22. As an Admin, I want to logout, so that no one else can use my account  
-23. As an Admin, I want to access my account, so that I can edit my personal information  
-24. As an Admin, I want to access my account, so that I can delete my personal information  
-25. As an Admin, I want a secure dashboard, so that only authorized admins can manage content  
-26. As an Admin, I want to see all users' accounts, so that I can have a clear view of the people in the system  
-27. As an Admin, I want to edit users' accounts, so that I can help users in managing their personal information  
-28. As an Admin, I want to delete users' accounts, so that I can remove malicious users from the system  
-29. As an Admin, I want to create new users, so that I can add new admins or users to the system  
-30. As an Admin, I want to access monsters' information, so that I can have a clear view of monsters in the system  
-31. As an Admin, I want to edit monsters' information, so that I can better balance the game  
-32. As an Admin, I want to delete monsters' information, so that I can remove obsolete creatures from the system  
-33. As an Admin, I want to create new monsters, so that I can add more creatures for the players  
-34. As an Admin, I want to access items' information, so that I can have a clear view of items in the system  
-35. As an Admin, I want to edit items' information, so that I can better balance the game  
-36. As an Admin, I want to delete items' information, so that I can remove obsolete items from the system  
-37. As an Admin, I want to create new items, so that I can add more items for the players 
+19. As an Admin, I want to login in the site, so that I can manage the system  
+20. As an Admin, I want to not put my credentials in the site every time a reload the site, so that I can use the site  
+21. As an Admin, I want to logout, so that no one else can use my account  
+22. As an Admin, I want to access my account, so that I can edit my personal information  
+23. As an Admin, I want to access my account, so that I can delete my personal information  
+24. As an Admin, I want a secure dashboard, so that only authorized admins can manage content  
+25. As an Admin, I want to see all users' accounts, so that I can have a clear view of the people in the system  
+26. As an Admin, I want to edit users' accounts, so that I can help users in managing their personal information  
+27. As an Admin, I want to delete users' accounts, so that I can remove malicious users from the system  
+28. As an Admin, I want to create new users, so that I can add new admins or users to the system  
+29. As an Admin, I want to access monsters' information, so that I can have a clear view of monsters in the system  
+30. As an Admin, I want to edit monsters' information, so that I can better balance the game  
+31. As an Admin, I want to delete monsters' information, so that I can remove obsolete creatures from the system  
+32. As an Admin, I want to create new monsters, so that I can add more creatures for the players  
+33. As an Admin, I want to access items' information, so that I can have a clear view of items in the system  
+34. As an Admin, I want to edit items' information, so that I can better balance the game  
+35. As an Admin, I want to delete items' information, so that I can remove obsolete items from the system  
+36. As an Admin, I want to create new items, so that I can add more items for the players 
 
 
 # CONTAINERS:
@@ -49,7 +48,7 @@ The project is a browser monster collector game web application. Players can col
 ## CONTAINER_NAME: labmon_auth_api
 
 ### DESCRIPTION:
-Manages all functionalities related to registration, login, session persistencefor players and administrators. Handles operations related to user and admins, viewing personal information, and storing profile related data.
+Manages all functionalities related to registration, login, and session persistence for players and administrators. Handles operations related to all users, like viewing personal information and storing profile related data.
 
 ### USER STORIES:
 
@@ -59,22 +58,22 @@ Manages all functionalities related to registration, login, session persistencef
 4. As a Player, I want to logout, so that no one else can use my account 
 5. As a Player, I want to access my account, so that I can edit my personal information  
 6. As a Player, I want to access my account, so that I can delete my personal information  
-20. As an Admin, I want to login in the site, so that I can manage the system  
-21. As an Admin, I want to not put my credentials in the site every time a reload the site, so that I can use the site 
-22. As an Admin, I want to logout, so that no one else can use my account 
-23. As an Admin, I want to access my account, so that I can edit my personal information  
-24. As an Admin, I want to access my account, so that I can delete my personal information  
-25. As an Admin, I want a secure dashboard, so that only authorized admins can manage content  
-26. As an Admin, I want to see all users' accounts, so that I can have a clear view of the people in the system  
-27. As an Admin, I want to edit users' accounts, so that I can help users in managing their personal information  
-28. As an Admin, I want to delete users' accounts, so that I can remove malicious users from the system  
-29. As an Admin, I want to create new users, so that I can add new admins or users to the system  
+19. As an Admin, I want to login in the site, so that I can manage the system  
+20. As an Admin, I want to not put my credentials in the site every time a reload the site, so that I can use the site 
+21. As an Admin, I want to logout, so that no one else can use my account 
+22. As an Admin, I want to access my account, so that I can edit my personal information  
+23. As an Admin, I want to access my account, so that I can delete my personal information  
+24. As an Admin, I want a secure dashboard, so that only authorized admins can manage content  
+25. As an Admin, I want to see all users' accounts, so that I can have a clear view of the people in the system  
+26. As an Admin, I want to edit users' accounts, so that I can help users in managing their personal information  
+27. As an Admin, I want to delete users' accounts, so that I can remove malicious users from the system  
+28. As an Admin, I want to create new users, so that I can add new admins or users to the system  
 
 ### PORTS: 
 "5001:5000"
 
 ### DESCRIPTION:
-The Authentication container is responsible for managing all the security-related functionalities that involve registration, login, session persistence. It also handles operations related to the management of user and admin profiles on the platform and includes displaying personal information for clients and the site administrator.
+The Authentication container is responsible for managing all the security-related functionalities that involve registration, login, and session persistence. It also handles operations related to the management of user profiles on the platform.
 
 ### PERSISTANCE EVALUATION
 The Authentication API requires persistent storage to manage registered users and their credentials.
@@ -82,7 +81,7 @@ It stores information such as usernames, encrypted passwords, and roles (player/
 While JWT tokens themselves are stateless, the system depends on the database for user verification and management.
 
 ### EXTERNAL SERVICES CONNECTIONS
-The Authentication container connects to RabbitMQ for messaging between micro-services.
+The Authentication container does not connect to external services.
 
 ### MICROSERVICES:
 
@@ -93,7 +92,7 @@ The Authentication container connects to RabbitMQ for messaging between micro-se
 - TECHNOLOGICAL SPECIFICATION:
 The microservice is developed in Python and uses Flask, a lightweight Python web framework.
 It uses the following libraries and technologies:
-    - JWT (pyjwt): The microservice handles JSON Web Tokens (JWT), commonly used for secure token-based authentication.
+    - JWT (PyJWT): The microservice handles JSON Web Tokens (JWT), commonly used for secure token-based authentication.
     - Flask-Bcrypt and bcrypt: These packages are used for secure encryption and cryptographic operations.
     - Flask-SQLAlchemy  and SQLAlchemy : Provide ORM-based interaction with the PostgreSQL database.
     - pika : Used to communicate with RabbitMQ message broker for asynchronous events
@@ -108,13 +107,13 @@ It uses the following libraries and technologies:
 - ENDPOINTS:
 	| HTTP METHOD | URL | Description | User Stories |
 	| ----------- | --- | ----------- | ------------ |
-    | POST | /users/register | Create and add a new user to db. Creates and sends out a JWT token and interact with game_api | 1, 3, 21 |
+    | POST | /users/register | Create and add a new user to db. Creates and sends out a JWT token | 1, 3, 21 |
     | POST | /users/login | Verifies encrypted password and creates and sends out a JWT token | 2, 20, 25|
     | GET | /users | Returns all the users in the database, that can be done only by the admin | 25, 26 |
-    | POST | /users | Inserts a new user in the database and interact with game_api | 29 |
-    | GET | /users/{id} | Returns the user informations | 5, 21, 23 |
-    | PUT | /users/{id} | To edit user informations | 5, 21, 23 |
-    | DELETE | /users/{id} | Deletes the user and interact with game_api | 6, 24, 28 |
+    | POST | /users | Inserts a new user in the database | 29 |
+    | GET | /users/{id} | Returns the user information | 5, 21, 23 |
+    | PUT | /users/{id} | Edits user information | 5, 21, 23 |
+    | DELETE | /users/{id} | Deletes the user | 6, 24, 28 |
 
 - DB STRUCTURE:
     **_User_** :	| **_id_** | name | email | password | role |
@@ -130,22 +129,22 @@ Manages monsters’ data and collections. It handles monster creation, modificat
 
 12. As a Player, I want to view my collection of monsters, so that I can track my progress  
 15. As a Player, I want to see which creatures I’m missing in a collection, so that I know what to aim for
-30. As an Admin, I want to access monsters' information, so that I can have a clear view of monsters in the system  
-31. As an Admin, I want to edit monsters' information, so that I can better balance the game  
-32. As an Admin, I want to delete monsters' information, so that I can remove obsolete creatures from the system  
-33. As an Admin, I want to create new monsters, so that I can add more creatures for the players  
+29. As an Admin, I want to access monsters' information, so that I can have a clear view of monsters in the system  
+30. As an Admin, I want to edit monsters' information, so that I can better balance the game  
+31. As an Admin, I want to delete monsters' information, so that I can remove obsolete creatures from the system  
+32. As an Admin, I want to create new monsters, so that I can add more creatures for the players  
 
 ### PORTS: 
 "5002:5000"
 
 ### DESCRIPTION:
-The  container is designed to manage all operations related to monsters. The container provides essential capabilities for the site administrator that include adding, modifying, or deleting monsters, as well as retrieving monsters details both for admin and players.
+The  container is designed to manage all operations related to monsters. The container provides essential capabilities for the site administrator that include adding, modifying, or deleting monsters, as well as retrieving monsters' details both for admin and players.
 
 ### PERSISTANCE EVALUATION
 The  container requires persistent storage to manage the monster information effectively. This container depends on a database of monsters that includes details like monster name, rarity, catch rate, collection and sprite.
 
 ### EXTERNAL SERVICES CONNECTIONS
-The Monster container connects to RabbitMQ for messaging between micro-services.
+The Monster container does not connect to external services.
 
 ### MICROSERVICES:
 
@@ -157,14 +156,13 @@ The Monster container connects to RabbitMQ for messaging between micro-services.
 The microservice is developed in Python 3, using Flask (3.0.3) as the main web framework.
 It manages all backend operations related to monsters. 
 The service allows both administrators and players to interact with the monster database — admins can create, edit, or delete monsters, while players can view locked collections.
-It uses the following libraries and technologies:
 It integrates with PostgreSQL for persistent data storage and uses RabbitMQ for inter-service communication.
 Key components and libraries used: 
    - Flask-Cors : Enables communication between frontend clients and backend APIs across origins.
    - Flask-Cors (5.0.0): Enables communication between frontend clients and backend APIs across origins.
    - Flask-SQLAlchemy and SQLAlchemy : ORM layer for interacting with the PostgreSQL database.
    - pika : Integrates the service with RabbitMQ for asynchronous communication.
-   - yJWT : Used for verifying player and admin tokens when accessing protected endpoints, infact only admin can edit or delete monsters
+   - PyJWT : Used for verifying player and admin tokens when accessing protected endpoints, only admins can add, edit, or delete monsters
 
 - SERVICE ARCHITECTURE:
    - A main controller manages routes for CRUD operations on monsters, enabling admins to create, update, and delete monster data.
@@ -178,10 +176,10 @@ Key components and libraries used:
     | HTTP METHOD | URL | Description | User Stories |
 	| ----------- | --- | ----------- | ------------ |
     | GET | /monsters | Returns all the monsters in the database | 12, 15, 30 |
-    | POST | /monsters | Inserts a new monster in the database and interacts with game_api | 33 |
-    | GET | /monsters/{id} | Returns the monster informations | 30 |
-    | PUT | /monsters/{id} | Edits the monster informations and interacts with game_api| 31 |
-    | DELETE | /monsters/{id} | Deletes the monster informations and interacts with game_api| 32 |
+    | POST | /monsters | Inserts a new monster in the database | 33 |
+    | GET | /monsters/{id} | Returns the monster's information | 30 |
+    | PUT | /monsters/{id} | Edits the monster's information | 31 |
+    | DELETE | /monsters/{id} | Deletes the monster's information | 32 |
 
 - DB STRUCTURE:
     **_Monster_** :	| **_id_** | name | rarity | catch_rate | collection_n | sprite |
@@ -195,10 +193,10 @@ Manages items’ data and inventory. It handles item creation, modification, and
 
 ### USER STORIES:
 13. As a Player, I want to view my inventory, so that I can see what items I own 
-34. As an Admin, I want to access items' information, so that I can have a clear view of items in the system  
-35. As an Admin, I want to edit items' information, so that I can better balance the game  
-36. As an Admin, I want to delete items' information, so that I can remove obsolete items from the system  
-37. As an Admin, I want to create new items, so that I can add more items for the players 
+33. As an Admin, I want to access items' information, so that I can have a clear view of items in the system  
+34. As an Admin, I want to edit items' information, so that I can better balance the game  
+35. As an Admin, I want to delete items' information, so that I can remove obsolete items from the system  
+36. As an Admin, I want to create new items, so that I can add more items for the players 
 
 ### PORTS: 
 "5003:5000"
@@ -210,7 +208,7 @@ The  container is designed to manage all operations related to items. The contai
 The  container requires persistent storage to manage the item information effectively. This container depends on a database of item that includes details like item name, price, description, effect and sprite.
 
 ### EXTERNAL SERVICES CONNECTIONS
-The Item container connects to RabbitMQ for messaging between micro-services.
+The Item container does not connect to external services.
 
 ### MICROSERVICES:
 
@@ -222,31 +220,30 @@ The Item container connects to RabbitMQ for messaging between micro-services.
 The microservice is developed in Python 3, using Flask (3.0.3) as the main web framework.
 It manages all backend operations related to items.
 The service allows both administrators and players to interact with the item database — admins can create, edit, or delete items, while players can only view what they have bougth.
-It uses the following libraries and technologies:
 It integrates with PostgreSQL for persistent data storage and uses RabbitMQ for inter-service communication.
 Key components and libraries used: 
    - Flask-Cors : Enables communication between frontend clients and backend APIs across origins.
    - Flask-Cors (5.0.0): Enables communication between frontend clients and backend APIs across origins.
    - Flask-SQLAlchemy and SQLAlchemy : ORM layer for interacting with the PostgreSQL database.
    - pika : Integrates the service with RabbitMQ for asynchronous communication.
-   - yJWT : Used for verifying player and admin tokens when accessing protected endpoints, infact only admin can edit or delete items
+   - PyJWT : Used for verifying player and admin tokens when accessing protected endpoints, infact only admin can edit or delete items
 
 - SERVICE ARCHITECTURE:
    - A main controller manages routes for CRUD operations on items, handling both admin and player requests.
    - A models directory defines SQLAlchemy entities representing in-game items and their properties.
    - A utilities module includes helper functions for data validation and business logic related to item bonuses.
    - A config module contains environment and database settings.
-   - The service connects to a PostgreSQL database for item persistence and communicates with the Game API to provide item effects during encounters.
+   - The service connects to a PostgreSQL database for item persistence and communicates with the Game API to synchronize item effects during encounters.
 
 - ENDPOINTS:
 
     | HTTP METHOD | URL | Description | User Stories |
 	| ----------- | --- | ----------- | ------------ |
     | GET | /items | Returns all the items in the database | 12, 15, 30 |
-    | POST | /items | Inserts a new item in the database and interacts with game_api | 33 |
-    | GET | /items/{id} | Returns the item informations | 30 |
-    | PUT | /items/{id} | Edits the item informations and interacts with game_api| 31 |
-    | DELETE | /items/{id} | Deletes the item informations and interacts with game_api| 32 |
+    | POST | /items | Inserts a new item in the database | 33 |
+    | GET | /items/{id} | Returns the item's information | 30 |
+    | PUT | /items/{id} | Edits the item's information | 31 |
+    | DELETE | /items/{id} | Deletes the item's information | 32 |
 
 - DB STRUCTURE:
     **_Item_** :	| **_id_** | name | price | description | effect | sprite |
@@ -278,10 +275,10 @@ When a player decides to “shard” or sell duplicate monsters, the Game API pr
 The Game API is the microservice responsible for managing core gameplay mechanics. It handles monster encounter generation based on elapsed time and rarity probabilities, oversees capture attempts including item bonuses, and processes the selling or “sharding” of duplicate monsters with corresponding in-game rewards. It evaluates collection progress, and grants rewards in real time. The service publishes gameplay events to RabbitMQ for asynchronous updates and verifies user identity and permissions via JWT through the Authentication API.
 
 ### PERSISTANCE EVALUATION
-The  container depends on a database to manage players, monsters, items and encounters information effectively. 
+The container depends on a database to manage players, monsters, items and encounters effectively. 
 
 ### EXTERNAL SERVICES CONNECTIONS
-The Game container connects to RabbitMQ for messaging between micro-services.
+The Game container does not connect to external services.
 
 ### MICROSERVICES:
 
@@ -292,14 +289,13 @@ The Game container connects to RabbitMQ for messaging between micro-services.
 - TECHNOLOGICAL SPECIFICATION:
 The microservice is developed in Python 3, using Flask (3.0.3) as the main web framework.
 It manages all backend operations related to game logic.
-It uses the following libraries and technologies:
 It integrates with PostgreSQL for persistent data storage and uses RabbitMQ for inter-service communication.
 Key components and libraries used: 
    - Flask-Cors : Enables communication between frontend clients and backend APIs across origins.
    - Flask-Cors (5.0.0): Enables communication between frontend clients and backend APIs across origins.
    - Flask-SQLAlchemy and SQLAlchemy : ORM layer for interacting with the PostgreSQL database.
    - pika : Integrates the service with RabbitMQ for asynchronous communication.
-   - yJWT : Used for verifying player and admin tokens when accessing protected endpoints, infact only admin can edit or delete items
+   - PyJWT : Used for verifying player and admin tokens when accessing protected endpoints, infact only admin can edit or delete items
 
 - SERVICE ARCHITECTURE:
    - A main controller defines the routes that handle gameplay operations such as encounters, captures, and monster sharding.
@@ -315,7 +311,7 @@ Key components and libraries used:
     | GET | /game/encounters | Returns all the encounters in the database |  |
     | POST | /game/encounters | Create a new encounter in the database | 7 |
     | GET | /game/encounters/{id} | Returns the encounter informations |  |
-    | DELETE | /game/encounters/{id} | Deletes the encounter informations if the player runs away|  |
+    | DELETE | /game/encounters/{id} | Deletes the encounter's information if the player runs away|  |
     | POST | /game/encounters/{id}/catch | Tries to catch a monster in an encounter | 8 |
     | POST | /game/timer | Signal start of timer for encounter generation | 14 |
 
@@ -327,22 +323,39 @@ Key components and libraries used:
     **_MonsterStats_** :	| **_id_** | rarity | catch_rate | collection_n |
     **_ItemStats_** :	| **_id_** | price | effect | 
 
-
 ## 5
+## CONTAINER_NAME: labmon_app
+
+### DESCRIPTION: 
+Provides the User Interface for the whole Labmon game.
+
+### USER-STORIES:
+
+### PORTS: 
+5005:5000
+
+### DESCRIPTION:
+The labmon_app container serves a frontend for the game.
+
+### PERSISTANCE EVALUATION
+The labmon_app container does not include a database.
+
+### EXTERNAL SERVICES CONNECTIONS
+The labmon_app container does not connect to external services.
+
+### MICROSERVICES:
+
+#### MICROSERVICE: labmon_app
+- TYPE: frontend
+- DESCRIPTION: This microservice serves the main user interface for the game.
+- PORTS: 5005
+ 
+
+## 6
 ## CONTAINER_NAME: labmon_statistics_api
 
 ## USER STORIES
 18. As a Player, I want the game to track capture statistics, so that I feel motivated to improve  
-
-
-## 6
-## CONTAINER_NAME: labmon_app
-FRONTEND 
-
- 
-## MISSING USER STORIES
-19. As a Player, I want to be notified if an Admin deletes my account, so that I know my data has been canceled  
-
 
     
 
