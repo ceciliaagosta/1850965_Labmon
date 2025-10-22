@@ -127,8 +127,6 @@ Manages monsters’ data and collections. It handles monster creation, modificat
 
 ### USER STORIES:
 
-12. As a Player, I want to view my collection of monsters, so that I can track my progress  
-15. As a Player, I want to see which creatures I’m missing in a collection, so that I know what to aim for
 29. As an Admin, I want to access monsters' information, so that I can have a clear view of monsters in the system  
 30. As an Admin, I want to edit monsters' information, so that I can better balance the game  
 31. As an Admin, I want to delete monsters' information, so that I can remove obsolete creatures from the system  
@@ -175,7 +173,7 @@ Key components and libraries used:
 
     | HTTP METHOD | URL | Description | User Stories |
 	| ----------- | --- | ----------- | ------------ |
-    | GET | /monsters | Returns all the monsters in the database | 12, 15, 30 |
+    | GET | /monsters | Returns all the monsters in the database |  30 |
     | POST | /monsters | Inserts a new monster in the database | 33 |
     | GET | /monsters/{id} | Returns the monster's information | 30 |
     | PUT | /monsters/{id} | Edits the monster's information | 31 |
@@ -192,7 +190,7 @@ Key components and libraries used:
 Manages items’ data and inventory. It handles item creation, modification, and deletion for admins only and retrieves item data for players.
 
 ### USER STORIES:
-13. As a Player, I want to view my inventory, so that I can see what items I own 
+
 33. As an Admin, I want to access items' information, so that I can have a clear view of items in the system  
 34. As an Admin, I want to edit items' information, so that I can better balance the game  
 35. As an Admin, I want to delete items' information, so that I can remove obsolete items from the system  
@@ -264,7 +262,10 @@ When a player decides to “shard” or sell duplicate monsters, the Game API pr
 9. As a Player, I want to buy items with in-game currency, so that I can use them in an encounter  
 10. As a Player, I want to use my items in an encounter, so that I can increase my chances of capturing the monster  
 11. As a Player, I want to sell (shard) monsters, so that I can gain in-game currency  
+12. As a Player, I want to view my collection of monsters, so that I can track my progress  
+13. As a Player, I want to view my inventory, so that I can see what items I own 
 14. As a Player, I want to see how much time has passed from the last encounter, so that I can choose the best moment to trigger a rare encounter  
+15. As a Player, I want to see which creatures I’m missing in a collection, so that I know what to aim for
 16. As a Player, I want to receive a reward (in-game currency) for completing a collection, so that my effort feels meaningful  
 17. As a Player, I want duplicates to be clearly marked in my collection, so that I know what can be safely “sharded” 
 
@@ -310,10 +311,15 @@ Key components and libraries used:
 	| ----------- | --- | ----------- | ------------ |
     | GET | /game/encounters | Returns all the encounters in the database |  |
     | POST | /game/encounters | Create a new encounter in the database | 7 |
-    | GET | /game/encounters/{id} | Returns the encounter informations |  |
-    | DELETE | /game/encounters/{id} | Deletes the encounter's information if the player runs away|  |
-    | POST | /game/encounters/{id}/catch | Tries to catch a monster in an encounter | 8 |
+    | GET | /game/encounters/{encounter_id} | Returns the encounter informations |  |
+    | DELETE | /game/encounters/{encounter_id} | Deletes the encounter's information if the player runs away|  |
+    | POST | /game/encounters/{encounter_id}/catch | Tries to catch a monster in an encounter | 8 |
     | POST | /game/timer | Signal start of timer for encounter generation | 14 |
+    | GET | /game/collection | Returns player's collection | 12, 15 |
+    | PUT | /game/collection/{monster_id}/shard | Shards a monster | 11 |
+    | POST | /game/collection/claim | Claims a reward when a collection is completed | 16 |
+
+
 
 - DB STRUCTURE:
     **_Encounter_** :	| **_id_** | player_id | monster_id | isCaught | timestamp |
