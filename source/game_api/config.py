@@ -10,3 +10,5 @@ RABBITMQ_PASS = os.getenv("RABBITMQ_DEFAULT_PASS", "password")
 RARITY_LEVELS = [1, 2, 3, 4, 5]
 BASE_WEIGHTS = [50, 25, 15, 7, 3]  # Corresponding weights for rarity levels
 REWARDS = [5, 10, 15, 20, 25]  # Rewards for catching monsters of each rarity level
+SHARD_REWARDS = [25, 50, 100, 150, 200] # Rewards for sharding monsters of each rarity level
+CLAIM_REWARD = 500

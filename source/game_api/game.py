@@ -210,7 +210,70 @@ def start_timer(data):
     player.timer_start = datetime.now(timezone.utc)
     db.session.commit()
     return jsonify({'message': 'Timer started', 'start_time': player.timer_start}), 200
+
+# Get a player's collection
+@app.route('/game/collection', methods=['GET'])
+@token_required
+def get_collection(data):
+    player = Player.query.get_or_404(data.get('user_id'))
+    collection = Collection.query.with_entities(Collection.monster_id, Collection.qty).filter_by(player_id=player.player_id).all()
+    return jsonify({'collection': {monster_id: qty for monster_id, qty in collection}}), 200
+
+# Shard a monster from the player's collection
+@app.route('/game/collection/<int:monster_id>/shard', methods=['PUT'])
+@token_required
+def shard_monster(data, monster_id):
+    player = Player.query.get_or_404(data.get('user_id'))
+    collection_entry = Collection.query.filter_by(player_id=player.player_id, monster_id=monster_id).first()
+    if not collection_entry:
+        return jsonify({'error': 'Monster not found in collection'}), 404
+    if collection_entry.qty <= 0:
+        return jsonify({'error': 'Not enough quantity to shard this monster'}), 400
     
+    monster_stats = MonsterStats.query.get_or_404(monster_id)
+    rarity = monster_stats.rarity
+
+    try:
+        reward = config.SHARD_REWARDS[rarity - 1]
+    except IndexError:
+        return jsonify({'error': 'Invalid rarity value'}), 400 
+
+    collection_entry.qty -= 1
+    player.currency += reward
+    db.session.commit()
+
+    return jsonify({'monster_id': monster_id,'new_quantity': collection_entry.qty,'reward': reward,'new_currency': player.currency}), 200
+
+@app.route('/game/collection/claim', methods=['POST'])
+@token_required
+def claim_collection_rewards(data):
+    player= Player.query.get_or_404(data.get('user_id'))
+    requested_collection = request.get_json().get('collection')
+    if not requested_collection:
+        return jsonify({'error': 'No collection data provided'}), 400
+    if requested_collection in player.collections_completed:
+        return jsonify({'error': 'Collection already claimed'}), 400
+    collection_monsters = MonsterStats.query.filter_by(collection=requested_collection).all()
+    if not collection_monsters:
+        return jsonify({'error': 'Invalid collection specified'}), 400
+    counted_monsters = len(collection_monsters)
+    owned_monsters = ( db.session.query(Collection).join( MonsterStats, Collection.monster_id == MonsterStats.monster_id )
+        .filter( Collection.player_id == player.player_id, MonsterStats.collection == requested_collection, Collection.qty > 0 )
+        .count() )
+    if counted_monsters != owned_monsters:
+        return jsonify({'error': 'Collection not complete'}), 400
+    
+    reward = config.CLAIM_REWARD 
+    player.currency += reward
+    current_list = player.collections_completed or []
+    current_list.append(requested_collection)
+    player.collections_completed = current_list
+    db.session.commit()
+    return jsonify({'message': 'Collection claimed successfully', 'reward': reward, 'new_currency': player.currency}), 200
+    
+
+
+
 
 if __name__ == '__main__':
     threading.Thread(
