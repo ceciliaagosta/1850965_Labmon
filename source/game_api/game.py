@@ -220,10 +220,14 @@ def get_collection(data):
     return jsonify({'collection': {monster_id: qty for monster_id, qty in collection}}), 200
 
 # Shard a monster from the player's collection
-@app.route('/game/collection/<int:monster_id>/shard', methods=['PUT'])
+@app.route('/game/collection/shard', methods=['PUT'])
 @token_required
-def shard_monster(data, monster_id):
+def shard_monster(data):
     player = Player.query.get_or_404(data.get('user_id'))
+    monster_id = request.get_json().get('monster_id')
+    if not monster_id:
+        return jsonify({'error': 'No monster_id provided'}), 400
+
     collection_entry = Collection.query.filter_by(player_id=player.player_id, monster_id=monster_id).first()
     if not collection_entry:
         return jsonify({'error': 'Monster not found in collection'}), 404

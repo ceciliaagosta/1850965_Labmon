@@ -316,7 +316,7 @@ Key components and libraries used:
     | POST | /game/encounters/{encounter_id}/catch | Tries to catch a monster in an encounter | 8 |
     | POST | /game/timer | Signal start of timer for encounter generation | 14 |
     | GET | /game/collection | Returns player's collection | 12, 15 |
-    | PUT | /game/collection/{monster_id}/shard | Shards a monster | 11 |
+    | PUT | /game/collection/shard | Shards a monster | 11 |
     | POST | /game/collection/claim | Claims a reward when a collection is completed | 16 |
 
 
