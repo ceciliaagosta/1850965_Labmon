@@ -2,11 +2,10 @@
   <div class="card p-4 shadow-sm mb-3 d-flex flex-column justify-content-between align-items-center text-center monster-encounter">
     <!-- Monster Sprite -->
     <img
-      :src="monster.sprite"
+      :src="sprite"
       alt="Monster sprite"
       class="monster-sprite mb-3"
     />
-
     <!-- Monster Name -->
     <h4 class="mb-4">{{ monster.name }}</h4>
 
@@ -19,7 +18,7 @@
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   monster: {
     type: Object,
     required: true,
@@ -37,6 +36,8 @@ defineProps({
     required: true
   }
 });
+
+const sprite = "/sprites/" + props.monster.sprite
 </script>
 
 <style scoped>
