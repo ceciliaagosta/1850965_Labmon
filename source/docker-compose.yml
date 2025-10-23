@@ -15,7 +15,7 @@ services:
       - labap_network
 
   db:
-    image: postgres
+    image: postgres:17
     container_name: labmon_db
     restart: unless-stopped
     environment:
