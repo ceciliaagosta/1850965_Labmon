@@ -291,7 +291,7 @@ def buy_item(data):
     player = Player.query.get_or_404(data.get('user_id'))
     body = request.get_json()
     item_id = body.get('item_id')
-    quantity = body.get('quantity', 1)
+    quantity = body.get('qty', 1)
 
     if not item_id or quantity <= 0:
         return jsonify({'error': 'Invalid item_id or quantity'}), 400
@@ -300,7 +300,7 @@ def buy_item(data):
     if not item:
         return jsonify({'error': 'Item not found'}), 404
 
-    total_cost = item.cost * quantity
+    total_cost = item.price * quantity
     if player.currency < total_cost:
         return jsonify({'error': 'Insufficient currency'}), 400
 
