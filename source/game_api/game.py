@@ -248,6 +248,7 @@ def shard_monster(data):
 
     return jsonify({'monster_id': monster_id,'new_quantity': collection_entry.qty,'reward': reward,'new_currency': player.currency}), 200
 
+# Claim rewards for completing a collection
 @app.route('/game/collection/claim', methods=['POST'])
 @token_required
 def claim_collection_rewards(data):
@@ -274,9 +275,46 @@ def claim_collection_rewards(data):
     player.collections_completed = current_list
     db.session.commit()
     return jsonify({'message': 'Collection claimed successfully', 'reward': reward, 'new_currency': player.currency}), 200
-    
 
+# Get player's inventory
+@app.route('/game/inventory', methods=['GET'])
+@token_required
+def get_inventory(data):
+    player = Player.query.get_or_404(data.get('user_id'))
+    inventory = Inventory.query.filter_by(player_id=player.player_id).all()
+    return jsonify({'inventory': [item.to_dict() for item in inventory]}), 200
 
+# Buy an item and add to inventory
+@app.route('/game/buy', methods=['POST'])
+@token_required
+def buy_item(data):
+    player = Player.query.get_or_404(data.get('user_id'))
+    body = request.get_json()
+    item_id = body.get('item_id')
+    quantity = body.get('quantity', 1)
+
+    if not item_id or quantity <= 0:
+        return jsonify({'error': 'Invalid item_id or quantity'}), 400
+
+    item = ItemStats.query.get(item_id)
+    if not item:
+        return jsonify({'error': 'Item not found'}), 404
+
+    total_cost = item.cost * quantity
+    if player.currency < total_cost:
+        return jsonify({'error': 'Insufficient currency'}), 400
+
+    inventory_entry = Inventory.query.filter_by(player_id=player.player_id, item_id=item.item_id).first()
+    if not inventory_entry:
+        inventory_entry = Inventory(player_id=player.player_id, item_id=item.item_id, qty=quantity)
+        db.session.add(inventory_entry)
+    else:
+        inventory_entry.qty += quantity
+
+    player.currency -= total_cost
+    db.session.commit()
+
+    return jsonify({'message': 'Item purchased successfully', 'new_currency': player.currency, 'item_id': item.item_id, 'new_qty': inventory_entry.qty}), 200
 
 
 if __name__ == '__main__':
