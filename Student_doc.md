@@ -312,14 +312,14 @@ Key components and libraries used:
     | GET | /game/encounters | Returns all the encounters in the database |  |
     | POST | /game/encounters | Create a new encounter in the database | 7 |
     | GET | /game/encounters/{encounter_id} | Returns the encounter informations |  |
-    | DELETE | /game/encounters/{encounter_id} | Deletes the encounter's information if the player runs away|  |
+    | DELETE | /game/encounters/{encounter_id} | Deletes the encounter's information if the player runs away |  |
     | POST | /game/encounters/{encounter_id}/catch | Tries to catch a monster in an encounter | 8 |
     | POST | /game/timer | Signal start of timer for encounter generation | 14 |
-    | GET | /game/collection | Returns player's collection | 12, 15 |
+    | GET | /game/collection | Returns player's collection | 12, 15, 17 |
     | PUT | /game/collection/shard | Shards a monster | 11 |
     | POST | /game/collection/claim | Claims a reward when a collection is completed | 16 |
-
-
+    | GET | /game/inventory | Returns player's inventory | 13 |
+    | POST | /game/buy | Buys an item and adds to inventory | 9 |
 
 - DB STRUCTURE:
     **_Encounter_** :	| **_id_** | player_id | monster_id | isCaught | timestamp |
