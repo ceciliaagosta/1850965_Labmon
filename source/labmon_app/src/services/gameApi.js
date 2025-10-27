@@ -47,3 +47,15 @@ export async function _catchEncounter(encounterId) {
 export async function _startTimer() {
   const res = await gameApi.post('/timer')
 }
+
+export async function _getCollection() {
+  const res = await gameApi.get('/collection')
+  return res
+}
+
+export async function _shard(monsterId) {
+  const res = await gameApi.put('/collection/shard', {
+    monster_id: monsterId
+  })
+  return res
+}
