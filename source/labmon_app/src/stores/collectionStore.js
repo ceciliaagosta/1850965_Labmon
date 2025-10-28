@@ -17,7 +17,6 @@ export const useCollectionStore = defineStore('collection', () => {
       await monsterStore.fetchAllMonsters()
       try {
         const res = await _getCollection()
-        // console.log(res.data.collection)
         collection.value = res.data.collection
         splitCollections()
       } catch (err) {
@@ -27,14 +26,28 @@ export const useCollectionStore = defineStore('collection', () => {
     }
 
     function splitCollections() {
-      // TODO: qua valerio si è perso e questo split va ancora implementato
-      const monsters = toRaw(allMonsters.value)
-      const foundCollections = []
-      for (var m in monsters) {
-          const collectionNum = monsters[m].collection
-          // if (collectionNum not in)
+    const monsters = toRaw(allMonsters.value)
+    const userCollection = toRaw(collection.value)
+    const splittedCollections = {}
+
+    monsters.forEach((monster) => {
+      const collNum = monster.collection
+
+      if (!(collNum in splittedCollections)) {
+        splittedCollections[collNum] = []
       }
-    }
+
+      // add caught info
+      const quantity = userCollection[monster.id] ?? 0
+      splittedCollections[collNum].push({
+        ...monster,
+        quantity,
+        caught: monster.id in userCollection
+      })
+    })
+
+    collections.value = splittedCollections
+  }
 
     async function shardMonster(monsterId) {
       try {
@@ -48,6 +61,7 @@ export const useCollectionStore = defineStore('collection', () => {
 
   return {
     allMonsters,
+    collections,
     collection,
     fetchCollection,
     shardMonster,

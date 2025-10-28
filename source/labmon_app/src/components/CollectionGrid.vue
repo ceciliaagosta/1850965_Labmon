@@ -7,7 +7,7 @@
   </div>
   <div class="monster-grid">
     <CollectionEntryCard
-      v-for="monster in monsters"
+      v-for="monster in props.monsters"
       :key="monster.id"
       :monster="mapMonster(monster)"
       :quantity="getQuantity(monster)"
@@ -27,6 +27,10 @@ const monsterStore = useMonsterStore()
 const monsters = computed(() => monsterStore.monsters)
 
 const props = defineProps({
+  monsters: {
+    type: Array,
+    default: () => []
+  },
   collection: {
     type: Object,
     default: () => ({}),
@@ -36,6 +40,7 @@ const props = defineProps({
     required: true
   }
 })
+
 
 const mapMonster = (m) => ({
   id: m.id,

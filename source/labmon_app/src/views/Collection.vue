@@ -1,8 +1,11 @@
 <template>
+  <div v-for="(monsters, number) in collectionStore.collections" :key="number">
     <CollectionGrid
-        :collection="collectionStore.collection"
-        :collectionNumber="1"    
+      :collection="collectionStore.collection"
+      :collectionNumber="number"
+      :monsters="monsters"
     />
+  </div>
 </template>
 
 <script setup>
