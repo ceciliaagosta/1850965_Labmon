@@ -30,7 +30,8 @@ const mapItem = (i) => ({
   id: i.id,
   name: i.name, 
   sprite: i.sprite,
-  price: i.price
+  price: i.price,
+  description: i.description
  })
 
 </script>

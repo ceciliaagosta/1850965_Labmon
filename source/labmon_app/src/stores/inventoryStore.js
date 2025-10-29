@@ -9,7 +9,7 @@ export const useInventoryStore = defineStore('inventory', () => {
     const uiStore = useUiStore()  
 
     const allItems = computed(() => itemStore.items)
-    const inventory = ref({})
+    const inventory = ref([])
 
     async function fetchInventory() {
         await itemStore.fetchAllItems()

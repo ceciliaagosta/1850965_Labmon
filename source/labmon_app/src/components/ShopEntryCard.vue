@@ -9,7 +9,11 @@
 
       <div class="image-container">
         <img :src="sprite" :alt="item.name" class="sprite" />
-      </div>      
+      </div>    
+      
+      <div class="description">
+        {{ item.description }}
+      </div>
 
       <div class="footer">
         <button
@@ -73,6 +77,10 @@ async function handleBuy() {
   display: flex;
   justify-content: center;
   align-items: center;
+  border-top: 1px solid #eee;
+  height: 50px; 
+  padding-top: 6px;
+  margin-top: auto;
 }
 
 .item-card {
@@ -84,11 +92,11 @@ async function handleBuy() {
   padding: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; 
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   transition: transform 0.2s ease;
   overflow: hidden;
 }
+
 .number {
   font-size: 0.8em;
   color: #666;
@@ -120,7 +128,7 @@ async function handleBuy() {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80 px;             
+  height: 80px; /* fixed height */
   margin: 10px 0;            
 }
 
@@ -130,16 +138,22 @@ async function handleBuy() {
   object-fit: contain;
 }
 
-.footer {
-  display: flex;
-  justify-content: center; 
-  align-items: center;
-  border-top: 1px solid #eee;
-  height: 30px; 
-  padding-top: 6px;
+/* 🆕 Description area: fixed height so all cards align perfectly */
+.description {
+  flex: 0 0 85; /* fixed space reserved for text */
+  overflow-y: auto;
+  font-size: 0.9rem;
+  line-height: 1.2rem;
+  color: #444;
+  text-align: center;
+  padding: 4px;
+  scrollbar-width: thin;
 }
 
-.quantity {
-  font-weight: bold;
+/* 🆕 Ensure footer stays anchored at the bottom */
+.item-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 </style>

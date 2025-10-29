@@ -31,8 +31,8 @@ const props = defineProps({
     default: () => []
   },
   inventory: {
-    type: Object,
-    default: () => ({})
+    type: Array,
+    default: () => []
   }
 })
 
@@ -44,6 +44,7 @@ const mapItem = (i) => ({
  })
 
 const getQuantity = (item) => {
+  console.log(props)
   const entry = props.inventory.find(i => i.item_id === item.id)
   return entry ? entry.qty : 0
 }
