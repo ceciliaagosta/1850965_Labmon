@@ -19,6 +19,14 @@ export const useUiStore = defineStore('ui', () => {
   function showNotification(message, type) {
     const notification = {"message": message, "type": type}
     notifications.value.push(notification)
+    //Automatically remove after 10 seconds
+    setTimeout(() => {
+    const index = notifications.value.indexOf(notification)
+    if (index !== -1) {
+      notifications.value.splice(index, 1)
+    }
+  }, 5000) // 10000 ms = 10 seconds
+
   }
 
   async function startTimer() {
