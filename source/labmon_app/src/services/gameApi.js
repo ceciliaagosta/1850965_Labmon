@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const gameApi = axios.create({
   baseURL: '/api/game', 
-  // baseURL: "http://localhost:5004/game",
+  //baseURL: "http://localhost:5004/game",
   timeout: 10000
 })
 
@@ -69,5 +69,12 @@ export async function _claim(collectionId) {
 
 export async function _getInventory() {
   const res = await gameApi.get('/inventory')
+  return res
+}
+
+export async function _buy(itemId) {
+  const res = await gameApi.post('/buy', {
+    item_id: itemId
+  })
   return res
 }
