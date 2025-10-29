@@ -60,6 +60,13 @@ export async function _shard(monsterId) {
   return res
 }
 
+export async function _claim(collectionId) {
+  const res = await gameApi.post('/collection/claim', {
+    collection: collectionId
+  })
+  return res
+}
+
 export async function _getInventory() {
   const res = await gameApi.get('/inventory')
   return res

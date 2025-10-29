@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex justify-content-between align-items-center mx-3 mb-3">
     <h2 class="mb-0">Collection {{ collectionNumber }}</h2>
-    <button class="btn btn-primary me-3">
+    <button class="btn btn-primary me-3" @click="handleClaim">
       Claim
     </button>
   </div>
@@ -19,9 +19,11 @@
 
 <script setup>
 import CollectionEntryCard from './CollectionEntryCard.vue'
+import { useCollectionStore } from '../stores/collectionStore';
 import { useMonsterStore } from '../stores/monsterStore'
 import { computed } from 'vue'
 
+const collectionStore = useCollectionStore()
 const monsterStore = useMonsterStore()
 
 const monsters = computed(() => monsterStore.monsters)
@@ -40,6 +42,10 @@ const props = defineProps({
     required: true
   }
 })
+
+const handleClaim = async () => {
+  await collectionStore.claimCollection(props.collectionNumber)
+}
 
 
 const mapMonster = (m) => ({

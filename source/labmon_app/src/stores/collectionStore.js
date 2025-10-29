@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed, toRaw } from 'vue'
-import { _getCollection, _shard } from '../services/gameApi'
+import { _claim, _getCollection, _shard } from '../services/gameApi'
 import { useMonsterStore } from './monsterStore'
 import { useUiStore } from './uiStore'
 
@@ -51,12 +51,27 @@ export const useCollectionStore = defineStore('collection', () => {
 
     async function shardMonster(monsterId) {
       try {
-        const res = _shard(monsterId)
+        const res = await _shard(monsterId)
+        const reward = res.data.reward
+        uiStore.showNotification(`Monster shredded! You gained ${reward} shards.`, "success")
       } catch (err) {
         console.log(err)
         uiStore.showNotification(err.response.data.error, "error")
       }
       fetchCollection()
+    }
+
+    async function claimCollection(collectionId) {
+      try {
+        console.log(collectionId)
+        const res = await _claim(collectionId)
+        const reward = res.data.reward
+        uiStore.showNotification(`Collection claimed! You gained ${reward} shards.`, "success")
+      } catch (err) {
+        console.log(err)
+        uiStore.showNotification(err.response.data.error, "error")
+      }
+
     }
 
   return {
@@ -65,5 +80,6 @@ export const useCollectionStore = defineStore('collection', () => {
     collection,
     fetchCollection,
     shardMonster,
+    claimCollection
   }
 })
