@@ -59,3 +59,8 @@ export async function _shard(monsterId) {
   })
   return res
 }
+
+export async function _getInventory() {
+  const res = await gameApi.get('/inventory')
+  return res
+}

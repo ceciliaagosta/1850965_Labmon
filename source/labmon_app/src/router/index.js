@@ -9,6 +9,8 @@ import Profile from '../views/Profile.vue'
 import AdminPanel from '../views/AdminPanel.vue'
 import Encounter from '../views/Encounter.vue'
 import { useEncounterStore } from '../stores/encunterStore'
+import Inventory from '../views/Inventory.vue'
+
 
 const routes = [
   { path: '/', name: 'Home', component: Home, meta: { userOnly: true } },
@@ -18,6 +20,7 @@ const routes = [
   { path: '/profile', name: 'Profile', component: Profile, meta: { userOnly: true } },
   { path: '/admin_panel', name: 'Admin Panel', component: AdminPanel, meta: { adminOnly: true } },
   { path: '/encounter', name: 'Encounter', component: Encounter, meta: { isEncounterActive: true } },
+  { path: '/inventory', name: 'Inventory', component: Inventory, meta: { userOnly: true } }
 ]
 
 const router = createRouter({

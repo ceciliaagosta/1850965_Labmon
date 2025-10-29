@@ -27,6 +27,10 @@
           <li class="nav-item" v-if="authStore.isAuthenticated">
             <router-link to="/collection" class="nav-link">Collection</router-link>
           </li>
+          <!-- Inventory -->
+          <li class="nav-item" v-if="authStore.isAuthenticated">
+            <router-link to="/inventory" class="nav-link">Inventory</router-link>
+          </li>
         </ul>
 
         <ul class="navbar-nav">
