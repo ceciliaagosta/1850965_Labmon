@@ -270,7 +270,7 @@ def claim_collection_rewards(data):
     
     reward = config.CLAIM_REWARD 
     player.currency += reward
-    current_list = player.collections_completed or []
+    current_list = list(player.collections_completed or [])
     current_list.append(requested_collection)
     player.collections_completed = current_list
     db.session.commit()
