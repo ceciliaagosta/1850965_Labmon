@@ -324,6 +324,27 @@ def buy_item(data):
 
     return jsonify({'message': 'Item purchased successfully', 'new_currency': player.currency, 'item_id': item.item_id, 'new_qty': inventory_entry.qty}), 200
 
+# Get game stats
+@app.route('/game/stats', methods=['GET'])
+@token_required
+def get_stats(data):
+    # get how many captures over total not escaped encounters
+    monsters_encountered = db.session.query(Encounter).count()
+    monsters_caught = db.session.query(Encounter).filter_by(isCaught=True).count()
+    catch_rate_overall = (monsters_caught/monsters_encountered) if monsters_encountered > 0 else 0
+
+    # get how many people claimed each collection over total players
+    players = Player.query.all()
+    all_collections = db.session.query(MonsterStats.collection).distinct().all()
+    stats = {}
+
+    for c in all_collections:
+        collection = c.collection
+        claimed_count = sum(1 for p in players if str(collection) in (p.collections_completed))
+        claimed_percentage = (claimed_count / len(players)) if len(players) > 0 else 0
+        stats[collection] = claimed_percentage
+    
+    return jsonify({'catch_rate': catch_rate_overall, 'claimed': stats})
 
 if __name__ == '__main__':
     threading.Thread(
