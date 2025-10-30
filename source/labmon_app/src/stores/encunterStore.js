@@ -3,12 +3,14 @@ import { ref, computed } from 'vue'
 import { _catchEncounter, _fetchAllEncounters, _fetchEncounter, _generateEncounter, _quitEncounter, _startTimer } from '../services/gameApi'
 import router from '../router'
 import { useUiStore } from './uiStore'
+import { useUserStore } from './userStore'
 
 export const useEncounterStore = defineStore('encounter', () => {
   const encounterData = ref(null)
   const isEncounterActive = computed(() => !!encounterData.value)
 
   const uiStore = useUiStore()
+  const userStore = useUserStore()
 
     async function fetchAllEncounters() {
       try {
@@ -74,6 +76,7 @@ export const useEncounterStore = defineStore('encounter', () => {
         if (res.data.message == "Monster caught successfully!") {
           uiStore.showCatchSuccess = true
           uiStore.reward = res.data.reward
+          userStore.fetchPlayerCurrency()
         }
         if (res.data.message == "Failed to catch the monster.") {
           uiStore.showCatchFail = true

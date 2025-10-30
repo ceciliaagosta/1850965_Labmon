@@ -63,6 +63,14 @@ def admin_required(f):
 
 # Routes
 
+# Get player's data
+@app.route('/game/player', methods=['GET'])
+@token_required
+def get_player_data(data):
+    user_id = data.get('user_id')
+    player = Player.query.filter_by(player_id=user_id).first()
+    return jsonify(player.to_dict())
+
 # Get all encounters (admin only)
 @app.route('/game/encounters', methods=['GET'])
 @admin_required

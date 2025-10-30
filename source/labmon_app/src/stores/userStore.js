@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { _deleteUser, _fetchAllUsers, _fetchUser, _manualRegister, _updateUser, _tokenExpired } from '../services/usersApi'
+import { _getPlayerInfo } from '../services/gameApi'
 
 export const useUserStore = defineStore('user', () => {
   const users = ref([])
   const currentUser = ref(null)
+  const currency = ref(0)
 
   async function fetchAllUsers() {
     try {
@@ -50,6 +52,20 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
+  async function fetchPlayerCurrency(userId) {
+    try {
+      const res = await _getPlayerInfo()
+      currency.value = res.data.currency
+    } catch (error) {
+      if (error.status === 401) {
+        _tokenExpired()
+      }
+      const message = error.response.data.error
+      console.log(message)
+      uiStore.showNotification(error.response.data.error, "error")
+    }
+  }
+
   async function updateUser(userId, userData) {
     try {
       const res = await _updateUser(userId, userData)
@@ -87,9 +103,11 @@ export const useUserStore = defineStore('user', () => {
   return {
     users,
     currentUser,
+    currency,
     fetchAllUsers,
     manualRegister,
     fetchUser,
+    fetchPlayerCurrency,
     updateUser,
     deleteUser,
     init

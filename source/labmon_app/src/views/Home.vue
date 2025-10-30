@@ -2,7 +2,7 @@
     <div class="timer-section">
         <Timer class="mt-4"/>
         <button class="start-encounter-button" v-if="uiStore.timerIsRunning" @click="handleStartEncounter">
-            Request encounter
+            Fix bug!
         </button>
         <button class="start-button" v-if="!uiStore.timerIsRunning" @click="uiStore.startTimer">
             Start debugging!

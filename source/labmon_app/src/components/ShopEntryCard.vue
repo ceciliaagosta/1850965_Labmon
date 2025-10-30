@@ -31,7 +31,8 @@
 <script setup>
 
 import { _buy } from '../services/gameApi'
-import { useUiStore } from '../stores/uiStore';
+import { useUiStore } from '../stores/uiStore'
+import { useUserStore } from '../stores/userStore'
 
 const props = defineProps({
   item: {
@@ -42,11 +43,13 @@ const props = defineProps({
 
 const sprite = "/sprites/" + props.item.sprite
 const uiStore = useUiStore()
+const userStore = useUserStore()
 
 async function handleBuy() {
   try {
     let res = await _buy(props.item.id)
     console.log("bought", props.item.id)
+    userStore.fetchPlayerCurrency()
     uiStore.showNotification(`You bought the ${props.item.name}.`, "success")
   } catch(err) {
     console.log(err)

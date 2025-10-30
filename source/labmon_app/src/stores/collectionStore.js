@@ -3,11 +3,13 @@ import { ref, computed, toRaw } from 'vue'
 import { _claim, _getCollection, _shard } from '../services/gameApi'
 import { useMonsterStore } from './monsterStore'
 import { useUiStore } from './uiStore'
+import { useUserStore } from './userStore'
 
 export const useCollectionStore = defineStore('collection', () => {
 
   const monsterStore = useMonsterStore()
   const uiStore = useUiStore()  
+  const userStore = useUserStore()
 
   const allMonsters = computed(() => monsterStore.monsters)
   const collections = ref({})
@@ -53,6 +55,7 @@ export const useCollectionStore = defineStore('collection', () => {
       try {
         const res = await _shard(monsterId)
         const reward = res.data.reward
+        userStore.fetchPlayerCurrency()
         uiStore.showNotification(`Monster shredded! You gained ${reward} shards.`, "success")
       } catch (err) {
         console.log(err)
@@ -66,6 +69,7 @@ export const useCollectionStore = defineStore('collection', () => {
         console.log(collectionId)
         const res = await _claim(collectionId)
         const reward = res.data.reward
+        userStore.fetchPlayerCurrency()
         uiStore.showNotification(`Collection claimed! You gained ${reward} shards.`, "success")
       } catch (err) {
         console.log(err)

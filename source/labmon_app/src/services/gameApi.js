@@ -78,3 +78,8 @@ export async function _buy(itemId) {
   })
   return res
 }
+
+export async function _getPlayerInfo() {
+  const res = await gameApi.get('/player')
+  return res
+}
