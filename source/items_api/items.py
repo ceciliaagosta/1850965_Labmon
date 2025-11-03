@@ -119,7 +119,7 @@ def add_item(data):
     return jsonify(new_item.to_dict()), 200
 
 # Get, update, delete user by ID (self or admin)
-@app.route('/items/<int:items_id>', methods=['GET'])
+@app.route('/items/<int:item_id>', methods=['GET'])
 @token_required
 def get_item(data, item_id):
     item = Item.query.get_or_404(item_id)
