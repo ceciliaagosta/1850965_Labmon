@@ -38,7 +38,9 @@
         </ul>
 
         <ul class="navbar-nav">
-          <!-- Money counter -->
+          <div class="currency-display">
+            💰 {{ userStore.currency }}
+          </div>
            
           <!-- Account dropdown if logged in -->
           <li class="nav-item dropdown" v-if="authStore.isAuthenticated">
@@ -88,11 +90,26 @@
 <script setup>
 import { useAuthStore } from '../stores/authStore';
 import { useRouter } from 'vue-router';
+import { useUserStore } from '../stores/userStore';
 
 const authStore = useAuthStore();
+const userStore = useUserStore();
 const router = useRouter();
 
 const handleLogout = async () => {
   await authStore.logout();
 };
 </script>
+
+<style scoped>
+.currency-display {
+  margin-right: 16px;
+  background: #202020;
+  color: #20ff60;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  z-index: 1000;
+  font-family: monospace;
+}
+</style>

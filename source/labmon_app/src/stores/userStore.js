@@ -42,6 +42,8 @@ export const useUserStore = defineStore('user', () => {
     try {
       const res = await _fetchUser(userId)
       currentUser.value = res.data
+      const curr = await _getPlayerInfo()
+      currency.value = curr.data.currency
     } catch (error) {
       if (error.status === 401) {
         _tokenExpired()
