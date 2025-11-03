@@ -23,43 +23,43 @@ with app.app_context():
             db.create_all()
             if not Monster.query.first():
                 # Add default monsters if none exist
-                monster_1 = Monster(name="MOMster", rarity=1, catch_rate=0.8, collection=1, sprite="default_sprite.png")
+                monster_1 = Monster(name="MOMster", rarity=1, catch_rate=0.8, collection=1, sprite="MOMster.png")
                 db.session.add(monster_1)
                 utilities.publish_message('monster_created', monster_1.id, monster_1.catch_rate, monster_1.rarity, monster_1.collection)
 
-                monster_2 = Monster(name="SCRUMonster", rarity=1, catch_rate=0.5, collection=1, sprite="default_sprite.png")
+                monster_2 = Monster(name="SCRUMonster", rarity=1, catch_rate=0.5, collection=1, sprite="SCRUMonster.png")
                 db.session.add(monster_2)
                 utilities.publish_message('monster_created', monster_2.id, monster_2.catch_rate, monster_2.rarity, monster_2.collection)
 
-                monster_3 = Monster(name="Recursaur", rarity=2, catch_rate=0.7, collection=1, sprite="default_sprite.png")
+                monster_3 = Monster(name="Recursaur", rarity=2, catch_rate=0.7, collection=1, sprite="Recursaur.png")
                 db.session.add(monster_3)
                 utilities.publish_message('monster_created', monster_3.id, monster_3.catch_rate, monster_3.rarity, monster_3.collection)
 
-                monster_4 = Monster(name="Overflogre", rarity=2, catch_rate=0.4, collection=1, sprite="default_sprite.png")
+                monster_4 = Monster(name="Overflogre", rarity=2, catch_rate=0.4, collection=1, sprite="Overflogre.png")
                 db.session.add(monster_4)
                 utilities.publish_message('monster_created', monster_4.id, monster_4.catch_rate, monster_4.rarity, monster_4.collection)
 
-                monster_5 = Monster(name="Segfault", rarity=3, catch_rate=0.6, collection=1, sprite="default_sprite.png")
+                monster_5 = Monster(name="Segfault", rarity=3, catch_rate=0.6, collection=1, sprite="Segfault.png")
                 db.session.add(monster_5)
                 utilities.publish_message('monster_created', monster_5.id, monster_5.catch_rate, monster_5.rarity, monster_5.collection)
 
-                monster_6 = Monster(name="Nullpointer", rarity=3, catch_rate=0.5, collection=1, sprite="default_sprite.png")
+                monster_6 = Monster(name="Nullpointer", rarity=3, catch_rate=0.5, collection=1, sprite="Nullpointer.png")
                 db.session.add(monster_6)
                 utilities.publish_message('monster_created', monster_6.id, monster_6.catch_rate, monster_6.rarity, monster_6.collection)
 
-                monster_7 = Monster(name="Stackroach", rarity=4, catch_rate=0.3, collection=1, sprite="default_sprite.png")
+                monster_7 = Monster(name="Stackroach", rarity=4, catch_rate=0.3, collection=1, sprite="Stackroach.png")
                 db.session.add(monster_7)
                 utilities.publish_message('monster_created', monster_7.id, monster_7.catch_rate, monster_7.rarity, monster_7.collection)
 
-                monster_8 = Monster(name="Cachelot", rarity=4, catch_rate=0.2, collection=1, sprite="default_sprite.png")
+                monster_8 = Monster(name="Cachelot", rarity=4, catch_rate=0.2, collection=1, sprite="Cachelot.png")
                 db.session.add(monster_8)
                 utilities.publish_message('monster_created', monster_8.id, monster_8.catch_rate, monster_8.rarity, monster_8.collection)
 
-                monster_9 = Monster(name="COCOMOnster", rarity=5, catch_rate=0.3, collection=1, sprite="default_sprite.png")
+                monster_9 = Monster(name="COCOMOnster", rarity=5, catch_rate=0.3, collection=1, sprite="COCOMOnster.png")
                 db.session.add(monster_9)
                 utilities.publish_message('monster_created', monster_9.id, monster_9.catch_rate, monster_9.rarity, monster_9.collection)
 
-                monster_10 = Monster(name="RESTbane", rarity=5, catch_rate=0.1, collection=1, sprite="default_sprite.png")
+                monster_10 = Monster(name="RESTbane", rarity=5, catch_rate=0.1, collection=1, sprite="RESTbane.png")
                 db.session.add(monster_10)
                 utilities.publish_message('monster_created', monster_10.id, monster_10.catch_rate, monster_10.rarity, monster_10.collection)
 

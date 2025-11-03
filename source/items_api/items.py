@@ -23,23 +23,23 @@ with app.app_context():
             db.create_all()
             # Add default items if none exist
             if Item.query.first() is None:
-                item1 = Item(name="Debugger Net", price=10, description="Catches bugs — and monsters — with precision (small effect)", effect=1.25, sprite="default_sprite.png")
+                item1 = Item(name="Debugger Net", price=10, description="Catches bugs — and monsters — with precision (small effect)", effect=1.25, sprite="Debugger_Net.png")
                 db.session.add(item1)
                 utilities.publish_message('item_created', item1.id, item1.price, item1.effect)
 
-                item2 = Item(name="Patch Trap", price=15, description="Fixes the monster’s escape exploit before it runs away (medium effect)", effect=1.5, sprite="default_sprite.png")
+                item2 = Item(name="Patch Trap", price=15, description="Fixes the monster’s escape exploit before it runs away (medium effect)", effect=1.5, sprite="Patch_Trap.png")
                 db.session.add(item2)
                 utilities.publish_message('item_created', item2.id, item2.price, item2.effect)
 
-                item3 = Item(name="Version Control Cube", price=25, description="Reverts reality to a stable state where the monster was still in your grasp (large effect)", effect=2, sprite="default_sprite.png")
+                item3 = Item(name="Version Control Cube", price=25, description="Reverts reality to a stable state where the monster was still in your grasp (large effect)", effect=2, sprite="Version_Control_Cube.png")
                 db.session.add(item3)
                 utilities.publish_message('item_created', item3.id, item3.price, item3.effect)
 
-                item4 = Item(name="Commit Capsule", price=40, description="Locks your catch attempt permanently into the game history (very large effect)", effect=2.5, sprite="default_sprite.png")
+                item4 = Item(name="Commit Capsule", price=40, description="Locks your catch attempt permanently into the game history (very large effect)", effect=2.5, sprite="Commit_Capsule.png")
                 db.session.add(item4)
                 utilities.publish_message('item_created', item4.id, item4.price, item4.effect)
 
-                item5 = Item(name="Quantum Request", price=60, description="Sends infinite asynchronous capture attempts until one succeeds (enormous effect)", effect=3, sprite="default_sprite.png")
+                item5 = Item(name="Quantum Request", price=60, description="Sends infinite asynchronous capture attempts until one succeeds (enormous effect)", effect=3, sprite="Quantum_Request.png")
                 db.session.add(item5)
                 utilities.publish_message('item_created', item5.id, item5.price, item5.effect)
 
