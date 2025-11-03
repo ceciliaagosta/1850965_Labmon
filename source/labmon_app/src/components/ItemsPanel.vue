@@ -1,21 +1,30 @@
 <template>
 
-    <ItemToggle :itemData="potion" :onSelect="handleItemSelected" />
-
+  <ItemToggle v-for="item in inventory" 
+    :itemData="item" 
+    :onSelect="handleItemSelected" 
+    :isSelected="item.item_id==encounterStore.selectedItem" />
+  
 </template>
 
 <script setup>
 import ItemToggle from './ItemToggle.vue'
+import { ref } from 'vue'
+import { useInventoryStore } from '../stores/inventoryStore'
+import { useEncounterStore } from '../stores/encunterStore'
+import { computed } from 'vue'
+
+const inventoryStore = useInventoryStore()
+const encounterStore = useEncounterStore()
+
+const inventory = computed(() => inventoryStore.inventory)
 
 function handleItemSelected(itemId) {
-  console.log('Selected item ID:', itemId)
-}
-
-const potion = {
-  id: 42,
-  name: 'Potion',
-  quantity: 3,
-  sprite: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/potion.png'
+  if (itemId == encounterStore.selectedItem) {
+    encounterStore.selectedItem = -1
+  } else {
+    encounterStore.selectedItem = itemId
+  }
 }
 
 </script>

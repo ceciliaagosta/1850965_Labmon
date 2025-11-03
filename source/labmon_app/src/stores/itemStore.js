@@ -81,6 +81,10 @@ export const useItemStore = defineStore('item', () => {
     }
   }
 
+  function getCurrentItem() {
+    return currentItem.value
+  }
+
   async function init() {
     return
   }
@@ -93,6 +97,7 @@ export const useItemStore = defineStore('item', () => {
     fetchItem,
     updateItem,
     deleteItem,
+    getCurrentItem,
     init
   }
 })

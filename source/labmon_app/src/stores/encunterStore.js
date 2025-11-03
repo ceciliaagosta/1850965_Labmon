@@ -8,6 +8,7 @@ import { useUserStore } from './userStore'
 export const useEncounterStore = defineStore('encounter', () => {
   const encounterData = ref(null)
   const isEncounterActive = computed(() => !!encounterData.value)
+  const selectedItem = ref(-1)
 
   const uiStore = useUiStore()
   const userStore = useUserStore()
@@ -95,6 +96,7 @@ export const useEncounterStore = defineStore('encounter', () => {
   return {
     encounterData,
     isEncounterActive,
+    selectedItem,
     fetchAllEncounters,
     requestEncounter,
     startTimer,

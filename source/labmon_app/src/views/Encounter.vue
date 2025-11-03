@@ -8,7 +8,7 @@
           :onEscape="handleEscape"
           />
       </div>
-      <div class="col-4 bg-secondary" v-if="false">
+      <div class="col-4 px-4">
         <ItemsPanel/>
       </div>
     </div>
@@ -22,9 +22,11 @@ import ItemsPanel from '../components/ItemsPanel.vue';
 import { useEncounterStore } from '../stores/encunterStore';
 import { onBeforeRouteLeave } from 'vue-router';
 import { useMonsterStore } from '../stores/monsterStore';
+import { useInventoryStore } from '../stores/inventoryStore';
 
 const encounterStore = useEncounterStore();
 const monsterStore = useMonsterStore();
+const inventoryStore = useInventoryStore();
 
 const monster_id = encounterStore.encounterData.monster_id;
 const isLoading = ref(true);
@@ -32,6 +34,7 @@ const wildMonster = computed(() => monsterStore.currentMonster);
 
 onMounted(async () => {
   await monsterStore.fetchMonster(monster_id);
+  await inventoryStore.fetchInventory();
   isLoading.value = false;
 });
 
