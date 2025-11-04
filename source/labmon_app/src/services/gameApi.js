@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const gameApi = axios.create({
   baseURL: '/api/game', 
-  //baseURL: "http://localhost:5004/game",
+  // baseURL: "http://localhost:5004/game",
   timeout: 10000
 })
 
@@ -39,9 +39,17 @@ export async function _quitEncounter(encounterId) {
   return res
 }
 
-export async function _catchEncounter(encounterId) {
-  const res = await gameApi.post(`/encounters/${encounterId}/catch`)
-  return res
+export async function _catchEncounter(encounterId, itemId) {
+  if (itemId != -1) {
+    const res = await gameApi.post(`/encounters/${encounterId}/catch`, {
+      item_id: itemId
+    })
+    return res
+  } else {
+    console.log(itemId)
+    const res = await gameApi.post(`/encounters/${encounterId}/catch`)
+    return res
+  }
 }
 
 export async function _startTimer() {

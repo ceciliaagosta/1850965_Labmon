@@ -72,7 +72,7 @@ export const useEncounterStore = defineStore('encounter', () => {
 
     async function catchMonster(encounterId) {
       try {
-        const res = await _catchEncounter(encounterId)
+        const res = await _catchEncounter(encounterId, selectedItem.value)
         console.log(res.data)
         if (res.data.message == "Monster caught successfully!") {
           uiStore.showCatchSuccess = true
