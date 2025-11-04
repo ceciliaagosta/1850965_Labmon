@@ -268,6 +268,7 @@ When a player decides to “shard” or sell duplicate monsters, the Game API pr
 15. As a Player, I want to see which creatures I’m missing in a collection, so that I know what to aim for
 16. As a Player, I want to receive a reward (in-game currency) for completing a collection, so that my effort feels meaningful  
 17. As a Player, I want duplicates to be clearly marked in my collection, so that I know what can be safely “sharded” 
+18. As a Player, I want the game to track capture statistics, so that I feel motivated to improve  
 
 ### PORTS: 
 "5004:5000"
@@ -320,6 +321,8 @@ Key components and libraries used:
     | POST | /game/collection/claim | Claims a reward when a collection is completed | 16 |
     | GET | /game/inventory | Returns player's inventory | 13 |
     | POST | /game/buy | Buys an item and adds to inventory | 9 |
+    | GET | /game/player | Returns player's data |  |
+    | GET | /game/stats | Returns game's statistics | 18 |
 
 - DB STRUCTURE:
     **_Encounter_** :	| **_id_** | player_id | monster_id | isCaught | timestamp |
@@ -355,23 +358,21 @@ The labmon_app container does not connect to external services.
 - TYPE: frontend
 - DESCRIPTION: This microservice serves the main user interface for the game.
 - PORTS: 5005
- 
+- TECHNOLOGICAL SPECIFICATION:
+The microservice is developed in Vue + Javascript.
+It manages all UIs and allows for easy interaction with the game.
+It interacts with PostgreSQL DBs in the backend for persistent data storage.
+Key components and libraries used: 
+   - Vite : Enables for quickly building the frontend, using its Hot Module Replacemenbt system for real-time updating of the pages in development.
+   - Axios : a simple promise based HTTP client for the browser and node.js.
+   - Pinia : a store library for Vue, which allows for sharing a state across components.
+   - PyJWT : used for verifying player and admin tokens when accessing protected endpoints.
+   - Bootstrap : a CSS framework for responsive front-end web development.
+   - Vue : a model-view-viewmodel for building UIs and single-page applications.
 
-## 6
-## CONTAINER_NAME: labmon_statistics_api
-
-## USER STORIES
-18. As a Player, I want the game to track capture statistics, so that I feel motivated to improve  
-
-    
-
-
-
-
-
-
-
-
-
-
-
+- SERVICE ARCHITECTURE:
+   - An index file in the router directory defines the routes that handle all operations for the user.
+   - An App.vue file defines the main graphical aspects of the web app.
+   - The views and components directories define all graphical aspects of the app for every page.
+   - The API files in the services directory contain functions to manage the interaction with the backend APIs.
+   - The Stores in the stores directory allow for keeping track of changes in data and real-time updating of the visible state of the app.

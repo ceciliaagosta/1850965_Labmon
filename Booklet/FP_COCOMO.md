@@ -85,7 +85,7 @@ Computing the **VAF = 0.65 + (0.01 * ΣGSC) = 0.65 + (0.01 * 46) = 1.11**, we ge
 ## LOC
 
 Let's assume two thirds of the code is frontend: 
-Vue + TypeScript: 45–50 LOC/FP (UI + API calls). 
+Vue + JavaScript: 45–50 LOC/FP (UI + API calls). 
 
 One third of the code is backend:
 Python: 42 LOC/FP (routing, service, validation).
@@ -145,4 +145,4 @@ Despite COCOMO II predicting **15 PM** and a **8-month schedule** (meaning a sta
 1. **Full parallelization** of tasks across frontend, backend, and DB.  
 2. **Resource optimization**   
 3. **Strict scope control** to prevent feature creep and keep the workload stable.  
-4. **Efficient collaboration** with clear responsibilities and agile sprints.  
+4. **Efficient collaboration** with clear responsibilities and agile sprints.
