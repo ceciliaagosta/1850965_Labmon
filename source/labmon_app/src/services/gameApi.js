@@ -46,7 +46,6 @@ export async function _catchEncounter(encounterId, itemId) {
     })
     return res
   } else {
-    console.log(itemId)
     const res = await gameApi.post(`/encounters/${encounterId}/catch`)
     return res
   }

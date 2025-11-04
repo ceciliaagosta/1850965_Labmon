@@ -82,6 +82,7 @@ export const useEncounterStore = defineStore('encounter', () => {
         if (res.data.message == "Failed to catch the monster.") {
           uiStore.showCatchFail = true
         }
+        selectedItem.value = -1
         router.push('/')
       } catch (err) {
         console.log(err.message)
