@@ -36,6 +36,7 @@ export const useAuthStore = defineStore('auth', () => {
       const userStore = useUserStore()
       await userStore.fetchUser(userId.value)
       user.value = userStore.currentUser
+      await uiStore.getStats()
     } catch (error) {
       const message = error.response.data.error
       console.log(message)
@@ -53,6 +54,7 @@ export const useAuthStore = defineStore('auth', () => {
       const userStore = useUserStore()
       await userStore.fetchUser(userId.value)
       user.value = userStore.currentUser
+      await uiStore.getStats()
     } catch (error) {
       const message = error.response.data.error
       console.log(message)

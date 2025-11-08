@@ -9,7 +9,6 @@
         </button>
     </div>
 
-    <!-- Catch rate section -->
     <div class="catch-rate">
         {{ formattedCatchRate }}
     </div>

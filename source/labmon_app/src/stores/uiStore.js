@@ -73,7 +73,7 @@ export const useUiStore = defineStore('ui', () => {
   }
 
   async function init() {
-    getStats()
+    await getStats()
   }
 
   return {
