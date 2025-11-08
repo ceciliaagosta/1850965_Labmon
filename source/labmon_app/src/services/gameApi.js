@@ -90,3 +90,8 @@ export async function _getPlayerInfo() {
   const res = await gameApi.get('/player')
   return res
 }
+
+export async function _getStats() {
+  const res = await gameApi.get('/stats')
+  return res
+}

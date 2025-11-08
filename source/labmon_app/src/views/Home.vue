@@ -9,13 +9,10 @@
         </button>
     </div>
 
-    <!-- <div v-if="uiStore.showCatchSuccess" class="modal-overlay" @click.self="uiStore.showCatchSuccess = false">
-      <div class="success-card">
-        <h3>Success!</h3>
-        <p>The encounter was successfully started.</p>
-        <button @click="uiStore.showCatchSuccess = false">Close</button>
-      </div>
-    </div> -->
+    <!-- Catch rate section -->
+    <div class="catch-rate">
+        {{ formattedCatchRate }}
+    </div>
 
     <CatchSuccessModal v-if="uiStore.showCatchSuccess"/>
     <CatchFailModal v-if="uiStore.showCatchFail"/>
@@ -35,32 +32,35 @@ const authStore = useAuthStore()
 const uiStore = useUiStore()
 const encounterStore = useEncounterStore()
 
+const formattedCatchRate = computed(() => {
+  const rate = uiStore.catchRateStat || 0
+  return `Community catch rate: ${(rate * 100).toFixed(1)}%`
+})
+
 async function handleStartEncounter() {
-    var result = await encounterStore.requestEncounter()
+    const result = await encounterStore.requestEncounter()
     if (result) {
-        const elapsedTime = uiStore.stopTimer()
+        uiStore.stopTimer()
         router.push("/encounter")
     }
 }
 </script>
 
 <style>
-
 .timer-section {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: start;
-  height: 100vh;
-  /* background-color: #1e1e2f; */
+  height: 70vh;
   color: #ffffff;
   font-family: 'Courier New', Courier, monospace;
 }
 
-.start-button {
+.start-button,
+.start-encounter-button {
   font-size: 1.5rem;
   padding: 0.75rem 2rem;
-  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 8px;
@@ -68,15 +68,11 @@ async function handleStartEncounter() {
   transition: background-color 0.3s ease;
 }
 
+.start-button {
+  background-color: #4caf50;
+}
 .start-encounter-button {
   background-color: #55f;
-  font-size: 1.5rem;
-  padding: 0.75rem 2rem;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
 .start-button:hover:enabled {
@@ -84,29 +80,14 @@ async function handleStartEncounter() {
 }
 
 
-</style>
-
-<!-- .modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent overlay */
+.catch-rate {
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 1000; /* high enough to sit on top */
-}
-
-.success-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  max-width: 400px;
-  width: 90%;
+  align-items: center;
+  font-size: 2em; 
+  font-weight: bold;
+  color: #505050; 
   text-align: center;
-  z-index: 1001;
+  margin-top: 2rem;
 }
- -->
+</style>

@@ -71,6 +71,7 @@ export const useCollectionStore = defineStore('collection', () => {
         const reward = res.data.reward
         userStore.fetchPlayerCurrency()
         uiStore.showNotification(`Collection claimed! You gained ${reward} shards.`, "success")
+        uiStore.getStats()
       } catch (err) {
         console.log(err)
         uiStore.showNotification(err.response.data.error, "error")

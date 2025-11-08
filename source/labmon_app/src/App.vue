@@ -13,17 +13,15 @@ import Navbar from './components/Navbar.vue';
 import Notifications from './components/Notifications.vue';
 import { useUiStore } from './stores/uiStore';
 import { useAuthStore } from './stores/authStore';
-import { useUserStore } from './stores/userStore';
 import { onMounted } from 'vue';
 
 // store rehydration
 const authStore = useAuthStore()
+const uiStore = useUiStore()
 onMounted(() => {
   authStore.init()
+  uiStore.init()
 })
-
-const uiStore = useUiStore()
-const userStore = useUserStore()
 
 </script>
 

@@ -1,10 +1,14 @@
 <template>
   <div class="d-flex justify-content-between align-items-center mx-3 mb-3">
-    <h2 class="mb-0">Collection {{ collectionNumber }}</h2>
+    <div>
+      <h2 class="mb-0">Collection {{ collectionNumber }}</h2>
+      claimed by {{ formattedClaimedStat }}
+    </div>
     <button class="btn btn-primary me-3" @click="handleClaim">
       Claim
     </button>
   </div>
+
   <div class="monster-grid">
     <CollectionEntryCard
       v-for="monster in props.monsters"
@@ -19,14 +23,13 @@
 
 <script setup>
 import CollectionEntryCard from './CollectionEntryCard.vue'
-import { useCollectionStore } from '../stores/collectionStore';
+import { useCollectionStore } from '../stores/collectionStore'
 import { useMonsterStore } from '../stores/monsterStore'
 import { computed } from 'vue'
+import { useUiStore } from '../stores/uiStore'
 
 const collectionStore = useCollectionStore()
-const monsterStore = useMonsterStore()
-
-const monsters = computed(() => monsterStore.monsters)
+const uiStore = useUiStore()
 
 const props = defineProps({
   monsters: {
@@ -43,10 +46,12 @@ const props = defineProps({
   }
 })
 
+const claimedStatRaw = computed(() => uiStore.claimedStat[props.collectionNumber] || 0)
+const formattedClaimedStat = computed(() => `${(claimedStatRaw.value * 100).toFixed(1)}%`)
+
 const handleClaim = async () => {
   await collectionStore.claimCollection(props.collectionNumber)
 }
-
 
 const mapMonster = (m) => ({
   id: m.id,
@@ -57,12 +62,8 @@ const mapMonster = (m) => ({
 })
 
 const getQuantity = (monster) => props.collection[monster.id] ?? 0
-
 const isCaught = (monster) => monster.id in props.collection
-
-const onShard = (monster) => {
-  console.log("sharded")
-}
+const onShard = (monster) => console.log("sharded")
 </script>
 
 <style scoped>

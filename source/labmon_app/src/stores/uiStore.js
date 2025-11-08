@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { useAuthStore } from './authStore'
 import { useEncounterStore } from './encunterStore'
 import { ref, computed, stop } from 'vue'
+import { _getStats } from '../services/gameApi'
 
 
 export const useUiStore = defineStore('ui', () => {
@@ -15,6 +16,8 @@ export const useUiStore = defineStore('ui', () => {
   const timerIsRunning = ref(false)
   const time = ref(0)
   const intervalId = ref(null)
+  const catchRateStat = ref(null)
+  const claimedStat = ref({})
 
   function showNotification(message, type) {
     const notification = {"message": message, "type": type}
@@ -54,6 +57,25 @@ export const useUiStore = defineStore('ui', () => {
     return elapsedTime
   }
 
+  async function getStats() {
+    try {
+      const res = await _getStats()
+      catchRateStat.value = res.data.catch_rate
+      claimedStat.value = res.data.claimed
+    } catch (error) {
+      if (error.status === 401) {
+        _tokenExpired()
+      }
+      const message = error.response.data.error
+      console.log(message)
+      uiStore.showNotification(error.response.data.error, "error")
+    }
+  }
+
+  async function init() {
+    getStats()
+  }
+
   return {
     notifications,
     showNavbar,
@@ -62,8 +84,12 @@ export const useUiStore = defineStore('ui', () => {
     reward,
     time,
     timerIsRunning,
+    catchRateStat,
+    claimedStat,
     showNotification,
     startTimer,
-    stopTimer
+    stopTimer,
+    getStats,
+    init
   }
 })
