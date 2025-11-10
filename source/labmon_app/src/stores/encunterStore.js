@@ -83,6 +83,7 @@ export const useEncounterStore = defineStore('encounter', () => {
           uiStore.showCatchFail = true
         }
         selectedItem.value = -1
+        uiStore.getStats()
         router.push('/')
       } catch (err) {
         console.log(err.message)
