@@ -58,7 +58,7 @@
 | Get Statistics |   1 |   3 | Low    |      3 |
 | **Total EQ = 33 FP**  |     |     |            |        |
 
-**Total UFP = ILF (36) + EIF (0) + EI (64) + EO (0) + EQ (33) = 97**\
+**Total UFP = ILF (36) + EIF (0) + EI (64) + EO (0) + EQ (33) = 97**
 
 Considering the 14 GSCs being rated as below:
 
@@ -121,7 +121,7 @@ Using the official COCOMO II calibration table, we compute the 5 scale factors:
 
 ### Effort (Person-Months)
 $PM = A \times Size^E \times \prod EM$  
-$PM = 2.94 \times 4.7^{1.053} \times 1.0 ≈ 14.9 \, \text{PM}$
+$PM = 2.94 \times 4.7^{1.053} \times 1.0 ≈ 14.9 \ \text{PM}$
 
 **Estimated effort:** ~15 person-month
 
@@ -131,7 +131,7 @@ $PM = 2.94 \times 4.7^{1.053} \times 1.0 ≈ 14.9 \, \text{PM}$
 $TDEV = C \times PM^F$ 
 where
 $F = D + 0.2 \times (E - B) = 0.28 + 0.2 \times (1.053 - 0.91) ≈ 0.308$
-$TDEV = 3.67 \times 15^{0.308} ≈ 8.45 \, \text{months}$
+$TDEV = 3.67 \times 15^{0.308} ≈ 8.45 \ \text{months}$
 
 **Estimated schedule:** ~8 months  
 
