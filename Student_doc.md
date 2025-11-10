@@ -361,7 +361,6 @@ The labmon_app container does not connect to external services.
 - TECHNOLOGICAL SPECIFICATION:
 The microservice is developed in Vue + Javascript.
 It manages all UIs and allows for easy interaction with the game.
-It interacts with PostgreSQL DBs in the backend for persistent data storage.
 Key components and libraries used: 
    - Vite : Enables for quickly building the frontend, using its Hot Module Replacemenbt system for real-time updating of the pages in development.
    - Axios : a simple promise based HTTP client for the browser and node.js.
@@ -372,6 +371,7 @@ Key components and libraries used:
 
 - SERVICE ARCHITECTURE:
    - An index file in the router directory defines the routes that handle all operations for the user.
+   - The service uses nginx to host the web app static pages and reverse proxy for internal logic.
    - An App.vue file defines the main graphical aspects of the web app.
    - The views and components directories define all graphical aspects of the app for every page.
    - The API files in the services directory contain functions to manage the interaction with the backend APIs.
