@@ -17,7 +17,7 @@
 
 ## EI
 
-| External Input            |               FTR | DET | Complexity (per IFPUG table) | Weight |
+| External Input            |               FTR | DET | Complexity | Weight |
 | ------------------------- | ----------------------------------------: | --: | ---------------------------- | -----: |
 | Registration              |                          2  |   6 | Medium    |      4 |
 | Login                     |                                  1  |   2 | Low                      |      3 |
