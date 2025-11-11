@@ -10,7 +10,7 @@ Docker (or podman) is required to run this project.
 First, change directory to ```source```.
 
 ```sh
-cd /source
+cd source
 ```
 
 To run the project.
